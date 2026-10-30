@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Desafío INETFRADPAS · Juego Curricular</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800;9..144,900&family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--b:#314B96;--bd:#243875;--bm:#4A64B0;--bl:#EEF2FB;--bx:#dce5f9;--g:#F5A623;--gd:#D4881A;--gl:#fff8ec;--ink:#0A0E1A;--body:#2d3748;--mu:#64748b;--w:#fff;--bg:#F7F8FC;--br:#e2e8f0;--ok:#10b981;--no:#EF4444;--se:'Fraunces',Georgia,serif;--sa:'Plus Jakarta Sans',system-ui,sans-serif;--mo:'Space Mono',monospace;--grad:linear-gradient(135deg,#243875,#314B96,#4A64B0);--gg:linear-gradient(135deg,#F5A623,#f8b530)}
+html,body{overflow-x:hidden}
+body{font-family:var(--sa);color:var(--body);background:var(--bg);min-height:100vh;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(900px 520px at 12% -14%,rgba(49,75,150,.07),transparent 62%),radial-gradient(820px 480px at 98% 2%,rgba(245,166,35,.06),transparent 60%),repeating-linear-gradient(0deg,rgba(49,75,150,.03) 0 1px,transparent 1px 58px),repeating-linear-gradient(90deg,rgba(49,75,150,.03) 0 1px,transparent 1px 58px)}
+#app{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:22px 20px 70px}
+.hidden{display:none!important}
+header{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:28px}
+.brand{display:flex;align-items:center;gap:16px}
+.logo-slot{width:72px;height:72px;border-radius:16px;flex:0 0 auto;background:var(--w);border:2px dashed var(--bx);display:grid;place-items:center;overflow:hidden;transition:.2s}
+.logo-slot img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+.logo-slot:has(img){border-style:solid;border-color:transparent;background:transparent}
+.logo-slot:has(img) .logo-placeholder{display:none}
+.logo-placeholder{font-family:var(--mo);font-size:9px;letter-spacing:1.4px;color:var(--bm);font-weight:700;text-align:center;line-height:1.3}
+.brand-text{display:flex;flex-direction:column;gap:2px}
+.brand h1{font-family:var(--se);font-size:clamp(20px,2.4vw,26px);font-weight:800;line-height:1.05;letter-spacing:-.5px;color:var(--bd)}
+.brand h1 .accent{font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.brand small{display:block;color:var(--mu);font-family:var(--mo);font-size:10.5px;letter-spacing:1.6px;font-weight:700;text-transform:uppercase;margin-top:4px}
+.tools{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:1.5px solid var(--br);background:var(--w);color:var(--bd);padding:11px 18px;border-radius:12px;font-family:var(--sa);font-size:14px;font-weight:700;cursor:pointer;transition:.18s}
+.btn:hover{background:var(--bl);border-color:var(--bm);transform:translateY(-2px);box-shadow:0 8px 20px rgba(49,75,150,.1)}
+.btn.primary{background:var(--grad);color:var(--w);border-color:transparent;box-shadow:0 10px 26px rgba(49,75,150,.3)}
+.btn.gold{background:var(--gg);color:var(--ink);border-color:transparent;box-shadow:0 10px 26px rgba(245,166,35,.3)}
+.btn.ghost{background:transparent}
+.btn.ghost:hover{background:var(--bl)}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn.big{padding:16px 32px;font-size:16px;border-radius:14px}
+.hero{padding:36px 4px 10px;max-width:820px}
+.kicker{display:inline-block;font-family:var(--mo);font-size:11px;letter-spacing:2.4px;font-weight:700;color:var(--gd);border:1.5px solid var(--g);padding:7px 14px;border-radius:999px;background:var(--gl);text-transform:uppercase}
+.hero h2{font-family:var(--se);font-size:clamp(34px,5.6vw,62px);line-height:1.02;margin:22px 0 18px;letter-spacing:-1.6px;color:var(--ink);font-weight:800}
+.hero h2 em{font-style:italic;color:var(--b);font-weight:600}
+.hero p{color:var(--mu);font-size:17px;max-width:680px;line-height:1.7}
+.hero-cta{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:38px 0 22px}
+.estat{background:var(--w);border:1px solid var(--br);border-radius:16px;padding:20px 14px;text-align:center;box-shadow:0 2px 8px rgba(15,22,41,.03)}
+.estat small{display:block;font-family:var(--mo);font-size:10px;letter-spacing:1.6px;color:var(--mu);margin-bottom:8px;font-weight:700;text-transform:uppercase}
+.estat b{font-family:var(--se);font-size:24px;letter-spacing:.3px;color:var(--bd);font-weight:800}
+.panel{background:var(--w);border:1px solid var(--br);border-radius:22px;padding:30px;box-shadow:0 4px 20px rgba(15,22,41,.04)}
+.panel h2{font-family:var(--se);font-size:26px;margin-bottom:16px;color:var(--bd);font-weight:800}
+.panel h3{font-family:var(--mo);font-size:12px;margin:22px 0 10px;color:var(--b);letter-spacing:1.4px;font-weight:700;text-transform:uppercase}
+.panel p,.panel li{color:var(--body);line-height:1.8;font-size:15px}
+.panel ul{padding-left:22px}
+.panel ul li::marker{color:var(--g)}
+.panel ul li b{color:var(--bd);font-weight:700}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.grades{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px}
+.gcard{border:none;background:var(--w);border:1px solid var(--br);border-radius:22px;padding:0;cursor:pointer;transition:.25s;text-align:left;overflow:hidden;color:inherit;font-family:inherit;box-shadow:0 4px 18px rgba(15,22,41,.05)}
+.gcard:hover{transform:translateY(-8px);border-color:var(--bm);box-shadow:0 24px 48px rgba(49,75,150,.18)}
+.gband{height:130px;display:flex;align-items:flex-end;padding:20px;position:relative;background:var(--grad)}
+.gband.gold-accent{background:linear-gradient(135deg,#243875 0%,#314B96 45%,#4A64B0 75%,#F5A623 145%)}
+.gband .badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.45);padding:7px 14px;border-radius:999px;font-family:var(--mo);font-size:11px;font-weight:700;letter-spacing:1.4px;color:var(--w);backdrop-filter:blur(8px);text-transform:uppercase}
+.gband .ico-bg{position:absolute;top:18px;right:20px;font-size:52px;opacity:.32;line-height:1}
+.gbody{padding:22px 24px 26px}
+.gbody h3{font-family:var(--se);font-size:21px;margin-bottom:8px;color:var(--bd);font-weight:800}
+.gbody p{color:var(--mu);font-size:14px;line-height:1.65;min-height:48px}
+.gmeta{display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding-top:14px;border-top:1px solid var(--br);font-family:var(--mo);font-size:11px;color:var(--mu);font-weight:700;letter-spacing:1px}
+.gmeta .arrow{color:var(--g);font-size:16px;transition:.2s}
+.gcard:hover .gmeta .arrow{transform:translateX(4px)}
+.mode-bar{display:flex;gap:12px;align-items:center;background:var(--w);border:1px solid var(--br);border-radius:16px;padding:12px 16px;margin-bottom:22px;box-shadow:0 2px 8px rgba(15,22,41,.04);flex-wrap:wrap}
+.mode-bar .label{font-family:var(--mo);font-size:11px;letter-spacing:1.6px;color:var(--mu);font-weight:700;text-transform:uppercase}
+.mode-bar .spacer{flex:1}
+.mode-opt{border:1.5px solid var(--br);background:var(--w);color:var(--bd);padding:10px 18px;border-radius:11px;font-family:var(--sa);font-size:14px;font-weight:700;cursor:pointer;transition:.18s;display:inline-flex;align-items:center;gap:8px}
+.mode-opt:hover{border-color:var(--bm);background:var(--bl)}
+.mode-opt.active{background:var(--grad);color:var(--w);border-color:transparent;box-shadow:0 8px 20px rgba(49,75,150,.25)}
+.units{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:28px}
+.ucard{border:1px solid var(--br);background:var(--w);border-radius:22px;padding:28px;cursor:pointer;transition:.22s;text-align:left;color:inherit;font-family:inherit;position:relative;overflow:hidden;box-shadow:0 4px 18px rgba(15,22,41,.05)}
+.ucard:hover{transform:translateY(-8px);border-color:var(--bm);box-shadow:0 24px 48px rgba(49,75,150,.16)}
+.uico{width:60px;height:60px;border-radius:16px;background:var(--bl);display:grid;place-items:center;font-size:30px;margin-bottom:18px;border:1px solid var(--bx)}
+.ucard h3{font-family:var(--se);font-size:19px;margin-bottom:8px;color:var(--bd);font-weight:800;line-height:1.2}
+.ucard p{color:var(--mu);font-size:13.5px;line-height:1.65;min-height:66px}
+.ucard .play{margin-top:18px;width:100%;padding:13px;border-radius:12px;border:none;font-family:var(--sa);font-weight:800;font-size:14px;cursor:pointer;color:var(--w);background:var(--grad);letter-spacing:.4px}
+.ucard .tag{position:absolute;top:18px;right:18px;font-family:var(--mo);font-size:10px;letter-spacing:1.6px;color:var(--b);background:var(--bl);border:1px solid var(--bx);padding:5px 11px;border-radius:999px;font-weight:700;text-transform:uppercase}
+.ucard .pool{position:absolute;bottom:18px;right:18px;font-family:var(--mo);font-size:9.5px;letter-spacing:1.2px;color:var(--gd);font-weight:700}
+.backrow{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap}
+#gradeTitle{font-family:var(--se);font-size:clamp(28px,4vw,38px);margin-bottom:8px;color:var(--bd);font-weight:800}
+.setup-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:24px}
+.setup-head .uico{margin-bottom:0;flex:0 0 auto}
+.setup-head h2{font-family:var(--se);font-size:26px;color:var(--bd);font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.setup-head p{color:var(--mu);font-size:14.5px;line-height:1.5}
+.opt-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.opt-btn{border:1.5px solid var(--br);background:var(--w);color:var(--bd);padding:12px 18px;border-radius:12px;font-family:var(--sa);font-size:14px;font-weight:700;cursor:pointer;transition:.18s;position:relative;text-align:left;display:flex;flex-direction:column;gap:2px;min-width:200px}
+.opt-btn:hover:not(:disabled){border-color:var(--bm);background:var(--bl)}
+.opt-btn.sel{background:var(--grad);color:var(--w);border-color:transparent;box-shadow:0 8px 20px rgba(49,75,150,.25)}
+.opt-btn.sel small{color:rgba(255,255,255,.85)}
+.opt-btn small{font-family:var(--sa);font-size:11.5px;font-weight:500;color:var(--mu);letter-spacing:0}
+.opt-btn:disabled{opacity:.4;cursor:not-allowed;background:var(--bg)}
+.opt-btn.suggest{border-color:var(--g);background:var(--gl)}
+.opt-btn.suggest:not(.sel)::after{content:"★";position:absolute;top:-8px;right:-8px;background:var(--g);color:var(--ink);width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700}
+.grid-numbers{display:grid;grid-template-columns:repeat(10,1fr);gap:8px;margin-top:12px;max-width:680px}
+.opt-btn-num{border:1.5px solid var(--br);background:var(--w);color:var(--bd);padding:12px 4px;border-radius:10px;font-family:var(--sa);font-size:16px;font-weight:800;cursor:pointer;transition:.15s;text-align:center;position:relative;line-height:1}
+.opt-btn-num:hover:not(:disabled){border-color:var(--bm);background:var(--bl);transform:translateY(-2px)}
+.opt-btn-num.sel{background:var(--grad);color:var(--w);border-color:transparent;box-shadow:0 6px 14px rgba(49,75,150,.25)}
+.opt-btn-num.sel::after{content:"equipos";position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-family:var(--mo);font-size:8.5px;letter-spacing:1px;color:var(--bm);font-weight:700;text-transform:uppercase;white-space:nowrap}
+.suggest-hint{margin-top:12px;padding:12px 16px;border-radius:12px;background:var(--gl);border:1.5px solid var(--g);font-size:13.5px;color:#7c4a00;font-weight:600;line-height:1.6}
+.suggest-hint b{color:var(--bd)}
+.fair-hint{margin-top:12px;padding:14px 16px;border-radius:12px;background:linear-gradient(135deg,#eef2fb,#dce5f9);border:1.5px solid var(--bm);font-size:13.5px;color:var(--bd);font-weight:600;line-height:1.6}
+.fair-hint b{color:var(--bd);font-weight:800}
+.names{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:16px}
+.names input{width:100%;padding:12px 14px;border-radius:11px;border:1.5px solid var(--br);background:var(--w);color:var(--body);font-family:var(--sa);font-size:14px;font-weight:600}
+.names input:focus{outline:none;border-color:var(--bm);box-shadow:0 0 0 4px rgba(49,75,150,.12)}
+.hud{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:var(--w);border:1px solid var(--br);border-radius:16px;padding:14px 18px;margin-bottom:12px;box-shadow:0 2px 8px rgba(15,22,41,.04)}
+.chip{display:inline-flex;align-items:center;gap:9px;font-family:var(--mo);font-size:11px;letter-spacing:1.2px;font-weight:700;padding:8px 14px;border-radius:999px;background:var(--bl);border:1px solid var(--bx);color:var(--bd);text-transform:uppercase}
+.chip .dot{width:10px;height:10px;border-radius:50%;background:var(--g);box-shadow:0 0 12px rgba(245,166,35,.55)}
+.hud .spacer{flex:1}
+.stat{text-align:center;min-width:74px}
+.stat small{display:block;font-family:var(--mo);font-size:9.5px;letter-spacing:1.6px;color:var(--mu);font-weight:700;text-transform:uppercase;margin-bottom:2px}
+.stat b{font-family:var(--se);font-size:22px;letter-spacing:.2px;color:var(--bd);font-weight:800}
+#hudCombo{font-family:var(--mo);font-size:11.5px;font-weight:700;letter-spacing:1.4px;color:var(--ink);background:var(--gg);padding:8px 13px;border-radius:999px;text-transform:uppercase}
+#hudCombo.pop{animation:pop .55s ease}
+@keyframes pop{0%{transform:scale(.7);opacity:.2}60%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
+.progressbar{height:8px;border-radius:999px;background:var(--bl);overflow:hidden;margin:6px 0 14px;border:1px solid var(--bx);position:relative}
+#progFill{height:100%;border-radius:999px;background:var(--grad);transition:width .35s ease;width:0;position:relative;z-index:2}
+.progressbar .bonus-marker{position:absolute;top:-3px;bottom:-3px;width:6px;background:var(--g);border-radius:3px;box-shadow:0 0 12px rgba(245,166,35,.7);z-index:3;animation:pulse-mark 1.4s ease-in-out infinite}
+@keyframes pulse-mark{0%,100%{transform:scaleY(1);opacity:1}50%{transform:scaleY(1.15);opacity:.75}}
+.timerbar{height:9px;border-radius:999px;background:var(--bl);overflow:hidden;margin-bottom:18px;border:1px solid var(--bx)}
+#timerFill{height:100%;width:100%;border-radius:999px;background:var(--gg);transition:width .1s linear,background .3s}
+.scoreboard{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+.scoreboard.many{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+.sbcard{background:var(--w);border:2px solid var(--br);border-radius:14px;padding:12px 14px;transition:.25s;box-shadow:0 2px 8px rgba(15,22,41,.04);position:relative}
+.scoreboard.many .sbcard{padding:9px 11px;border-radius:12px}
+.sbcard .sb-name{font-family:var(--mo);font-size:9.5px;letter-spacing:1.6px;color:var(--mu);font-weight:700;text-transform:uppercase;margin-bottom:5px;display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap}
+.scoreboard.many .sb-name{font-size:8.5px;letter-spacing:1.2px}
+.sbcard .sb-b{font-family:var(--se);font-size:17px;font-weight:800;color:var(--bd);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:6px;line-height:1.15}
+.scoreboard.many .sb-b{font-size:14px;margin-bottom:5px}
+.sbcard .sb-score{font-family:var(--se);font-size:24px;font-weight:900;color:var(--b);letter-spacing:-.5px;line-height:1;margin-bottom:4px}
+.scoreboard.many .sb-score{font-size:20px}
+.sbcard .sb-turns{font-family:var(--mo);font-size:10px;letter-spacing:1.2px;color:var(--mu);font-weight:700;text-transform:uppercase}
+.scoreboard.many .sb-turns{font-size:9px}
+.sbcard .sb-turns b{color:var(--bd);font-family:var(--se);font-size:13px;font-weight:800}
+.sbcard.act{border-color:var(--g);background:var(--gl);box-shadow:0 0 0 4px rgba(245,166,35,.18),0 8px 20px rgba(245,166,35,.2);transform:translateY(-3px)}
+.sbcard.act .sb-name{color:var(--gd)}
+.sbcard.act .sb-score{color:var(--gd)}
+.sbcard.act .sb-turns b{color:var(--gd)}
+.sbcard .turn-pill{background:var(--g);color:var(--ink);font-family:var(--mo);font-size:9px;font-weight:800;padding:3px 8px;border-radius:999px;letter-spacing:1.2px;animation:blink 1.6s ease-in-out infinite}
+.sbcard .streak-pill{background:linear-gradient(135deg,#ef4444,#f97316);color:#fff;font-family:var(--mo);font-size:9px;font-weight:800;padding:3px 8px;border-radius:999px;letter-spacing:1.2px}
+.sbcard .fair-pill{background:linear-gradient(135deg,#10b981,#059669);color:#fff;font-family:var(--mo);font-size:9px;font-weight:800;padding:3px 8px;border-radius:999px;letter-spacing:1.2px}
+.sbcard .station-pill{background:linear-gradient(135deg,#8b5cf6,#a855f7);color:#fff;font-family:var(--mo);font-size:9px;font-weight:800;padding:3px 8px;border-radius:999px;letter-spacing:1.2px}
+.sbcard.done{opacity:.65}
+.sbcard.done .sb-score{color:var(--ok)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.55}}
+.powerups{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.pw{position:relative;border:1.5px solid var(--br);background:var(--w);color:var(--bd);padding:11px 15px;border-radius:12px;font-family:var(--sa);font-size:13px;font-weight:700;cursor:pointer;transition:.18s;box-shadow:0 2px 6px rgba(15,22,41,.04)}
+.pw:hover:not(:disabled){background:var(--gl);transform:translateY(-2px);border-color:var(--g);box-shadow:0 8px 18px rgba(245,166,35,.22)}
+.pw:disabled{opacity:.35;cursor:not-allowed;background:var(--bg)}
+.pw b{color:var(--gd);margin-right:6px;font-family:var(--mo);font-weight:700}
+.qcard{background:var(--w);border:1px solid var(--br);border-radius:22px;padding:36px;position:relative;overflow:hidden;box-shadow:0 6px 24px rgba(15,22,41,.06);transition:box-shadow .3s}
+.qcard.bonus{border-color:var(--g);box-shadow:0 0 0 4px rgba(245,166,35,.18),0 12px 32px rgba(245,166,35,.2)}
+.qcard.bonus::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at top right,rgba(245,166,35,.12),transparent 50%);pointer-events:none}
+.qcard::after{content:"";position:absolute;right:-80px;top:-80px;width:240px;height:240px;background:radial-gradient(circle,rgba(49,75,150,.08),transparent 70%);pointer-events:none}
+.qbadge-row{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.qbadge{display:inline-block;font-family:var(--mo);font-size:10.5px;letter-spacing:2.2px;font-weight:700;color:var(--w);background:var(--grad);padding:7px 14px;border-radius:999px;box-shadow:0 4px 14px rgba(49,75,150,.25);text-transform:uppercase}
+.qbadge.boss{background:var(--gg);color:var(--ink)}
+.qbadge.debate{background:linear-gradient(135deg,#0ea5e9,#314B96)}
+.qbadge.multi{background:linear-gradient(135deg,#10b981,#314B96)}
+.qbadge.bonus{background:var(--gg);color:var(--ink);animation:bonus-pulse 1.4s ease-in-out infinite}
+@keyframes bonus-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.qhelp{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--bm);background:var(--w);color:var(--b);font-weight:800;font-size:15px;cursor:pointer;transition:.18s;display:grid;place-items:center;font-family:var(--se)}
+.qhelp:hover{background:var(--b);color:var(--w);transform:scale(1.08)}
+#qText{font-family:var(--se);font-size:clamp(20px,2.7vw,30px);line-height:1.32;letter-spacing:-.5px;max-width:900px;color:var(--ink);font-weight:700}
+.hint{margin-top:16px;color:var(--mu);font-family:var(--mo);font-size:11.5px;letter-spacing:.8px;font-weight:700;text-transform:uppercase}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px}
+.options.binary{grid-template-columns:1fr 1fr}
+.options.binary .opt{padding:30px 18px;text-align:center;font-size:19px;font-weight:800;letter-spacing:1px}
+.options.binary .opt .num{display:none}
+.opt{position:relative;text-align:left;font-family:var(--sa);font-size:15.5px;color:var(--body);background:var(--w);border:1.5px solid var(--br);border-radius:15px;padding:19px 18px 19px 60px;cursor:pointer;transition:.16s ease;line-height:1.5;font-weight:600}
+.opt:hover:not(:disabled){background:var(--bl);transform:translateY(-2px);border-color:var(--bm);box-shadow:0 8px 20px rgba(49,75,150,.12)}
+.opt:disabled{cursor:default}
+.opt .num{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:var(--bl);border:1px solid var(--bx);color:var(--bd);font-family:var(--mo);font-size:13px;font-weight:800}
+.opt.correct{background:#D1FAE5;border-color:var(--ok);color:#065f46}
+.opt.correct .num{background:var(--ok);color:var(--w);border-color:var(--ok)}
+.opt.wrong{background:#FEE2E2;border-color:var(--no);color:#991b1b}
+.opt.wrong .num{background:var(--no);color:var(--w);border-color:var(--no)}
+.opt.missed{border-color:var(--ok);border-style:dashed;background:rgba(16,185,129,.06)}
+.opt.missed .num{background:rgba(16,185,129,.2);color:var(--ok);border-color:var(--ok)}
+.opt.picked .num{background:var(--g);color:var(--ink);border-color:var(--g)}
+.opt.selected{border-color:var(--b);background:var(--bl);box-shadow:0 0 0 3px rgba(49,75,150,.15)}
+.opt.selected .num{background:var(--b);color:var(--w);border-color:var(--b)}
+.opt.gone{opacity:.25;pointer-events:none}
+@keyframes ok{0%{transform:scale(.97)}60%{transform:scale(1.03)}100%{transform:scale(1)}}
+@keyframes no{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.multi-bar{margin-top:22px;display:flex;justify-content:flex-end;gap:12px;align-items:center;flex-wrap:wrap}
+.multi-bar .multi-info{font-family:var(--mo);font-size:12px;letter-spacing:1.2px;color:var(--mu);font-weight:700;text-transform:uppercase}
+.multi-bar .multi-info b{color:var(--b)}
+.feedback{margin-top:26px;border-radius:18px;padding:26px;border:1.5px solid var(--br);background:var(--bg);display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap;animation:slidein .35s ease}
+@keyframes slidein{0%{opacity:0;transform:translateY(10px)}100%{opacity:1;transform:translateY(0)}}
+.feedback.ok{border-color:rgba(16,185,129,.5);background:#D1FAE5}
+.feedback.bad{border-color:rgba(239,68,68,.5);background:#FEE2E2}
+.fb-main{flex:1;min-width:250px}
+.fb-main h4{font-family:var(--se);font-size:21px;margin-bottom:10px;color:var(--ink);font-weight:800}
+.feedback.ok .fb-main h4{color:#065f46}
+.feedback.bad .fb-main h4{color:#991b1b}
+.fb-main p{color:var(--body);line-height:1.75;font-size:15px}
+.fb-note{margin-top:14px;padding:14px 18px;border-radius:12px;background:var(--gl);border:1.5px solid var(--g);color:#7c4a00;font-size:14px;line-height:1.7;font-weight:600}
+.fb-note.fire{background:linear-gradient(135deg,#fff3e0,#ffd7be);border-color:#f97316;color:#7c2d12;font-weight:700}
+.fb-note.fair{background:linear-gradient(135deg,#eef2fb,#dce5f9);border-color:var(--bm);color:var(--bd);font-weight:700}
+.fb-note.station{background:linear-gradient(135deg,#f3e8ff,#e9d5ff);border-color:#a855f7;color:#5b21b6;font-weight:700}
+.fb-score{font-family:var(--se);font-size:34px;font-weight:900;color:var(--gd);white-space:nowrap;letter-spacing:-.5px}
+.end-wrap{text-align:center;padding:16px 0}
+.stars{font-size:64px;letter-spacing:14px;color:var(--g);margin:12px 0 10px;text-shadow:0 6px 28px rgba(245,166,35,.45);line-height:1}
+.stars .off{color:var(--bl);text-shadow:none}
+.end-wrap h2{font-family:var(--se);font-size:clamp(28px,4.6vw,44px);letter-spacing:-1px;color:var(--bd);font-weight:800}
+.end-wrap p{color:var(--mu);font-size:16px;margin-top:14px;line-height:1.7;max-width:640px;margin-left:auto;margin-right:auto}
+.end-wrap p b{color:var(--b);font-weight:800}
+.achv{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:32px 0 8px}
+.ach{background:var(--w);border:1.5px solid var(--br);border-radius:16px;padding:18px 16px;text-align:left;box-shadow:0 2px 8px rgba(15,22,41,.03)}
+.ach:not(.locked){border-color:var(--g);background:var(--gl)}
+.ach small{display:block;font-family:var(--mo);font-size:9.5px;letter-spacing:1.6px;color:var(--mu);margin-bottom:8px;font-weight:700;text-transform:uppercase}
+.ach:not(.locked) small{color:var(--gd)}
+.ach b{font-family:var(--se);font-size:16px;line-height:1.3;display:block;color:var(--bd);font-weight:800}
+.ach .desc{font-size:12px;color:var(--mu);margin-top:6px;font-weight:500}
+.ach.locked{opacity:.45}
+.end-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:32px}
+.podium{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:34px 0 12px}
+.podium.many{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;justify-content:stretch}
+.podium.many .pod{padding:16px 18px;min-width:auto;transform:none}
+.podium.many .pod.win{transform:none}
+.podium.many .pts{font-size:26px}
+.podium.many .name{font-size:16px;margin-bottom:6px}
+.podium.many .crown{font-size:26px}
+.pod{background:var(--w);border:2px solid var(--br);border-radius:20px;padding:22px 26px;min-width:180px;text-align:center;box-shadow:0 4px 18px rgba(15,22,41,.05);transition:.2s;position:relative}
+.pod:hover{transform:translateY(-4px)}
+.pod .crown{font-size:32px;margin-bottom:8px;display:block}
+.pod .rank{font-family:var(--mo);font-size:10px;letter-spacing:1.6px;color:var(--mu);font-weight:700;text-transform:uppercase;margin-bottom:6px}
+.pod .name{font-family:var(--se);font-size:19px;font-weight:800;color:var(--bd);margin-bottom:10px;line-height:1.2}
+.pod .pts{font-family:var(--se);font-size:32px;font-weight:900;color:var(--b);letter-spacing:-1px;line-height:1;margin-bottom:4px}
+.pod .sub{font-family:var(--mo);font-size:10.5px;letter-spacing:1.2px;color:var(--mu);font-weight:700;text-transform:uppercase}
+.pod.win{border-color:var(--g);background:var(--gl);box-shadow:0 0 0 4px rgba(245,166,35,.15);transform:scale(1.05)}
+.pod.win .pts,.pod.win .name,.pod.win .rank{color:var(--gd)}
+.pod.tie{border-color:var(--bm);background:var(--bl);box-shadow:0 0 0 4px rgba(49,75,150,.15)}
+.pod.tie .pts,.pod.tie .name,.pod.tie .rank{color:var(--bd)}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:60;overflow:hidden}
+.confetti i{position:absolute;top:-20px;width:9px;height:14px;border-radius:2px;animation:fall linear forwards}
+@keyframes fall{0%{transform:translateY(-20px) rotate(0)}100%{transform:translateY(105vh) rotate(720deg);opacity:.2}}
+.flash{position:fixed;inset:0;display:grid;place-items:center;z-index:55;pointer-events:none}
+.flash span{font-family:var(--mo);font-size:clamp(28px,6.5vw,62px);font-weight:800;letter-spacing:2px;color:var(--g);text-shadow:0 6px 40px rgba(245,166,35,.55);animation:fl 1.15s ease forwards;text-transform:uppercase;text-align:center;padding:0 20px}
+@keyframes fl{0%{opacity:0;transform:scale(.8)}25%{opacity:1;transform:scale(1.04)}75%{opacity:1}100%{opacity:0;transform:scale(1.15)}}
+.guide-overlay{position:fixed;inset:0;z-index:100;background:rgba(10,14,26,.7);backdrop-filter:blur(6px);display:grid;place-items:center;padding:24px;overflow-y:auto}
+.guide-modal{background:var(--w);border-radius:24px;padding:34px;max-width:960px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(10,14,26,.4);position:relative}
+.guide-close{position:absolute;top:16px;right:16px;width:38px;height:38px;border-radius:50%;border:none;background:var(--bl);color:var(--bd);font-size:20px;font-weight:700;cursor:pointer;display:grid;place-items:center}
+.guide-close:hover{background:var(--b);color:var(--w)}
+.guide-modal>h2{font-family:var(--se);font-size:30px;font-weight:800;color:var(--bd);letter-spacing:-.6px;margin-bottom:8px}
+.guide-modal>p.intro{color:var(--mu);font-size:15.5px;line-height:1.7;margin-bottom:24px;max-width:640px}
+.guide-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.gcard2{background:var(--w);border:1.5px solid var(--br);border-radius:18px;padding:22px;transition:.2s}
+.gcard2.current{border-color:var(--g);background:var(--gl);box-shadow:0 0 0 3px rgba(245,166,35,.15)}
+.gcard2 .g-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.gcard2 .g-ico{width:48px;height:48px;border-radius:14px;background:var(--bl);display:grid;place-items:center;font-size:24px;flex:0 0 auto;border:1px solid var(--bx)}
+.gcard2 h3{font-family:var(--se);font-size:18px;font-weight:800;color:var(--bd);line-height:1.2}
+.gcard2 h3 small{display:block;font-family:var(--mo);font-size:9.5px;letter-spacing:1.6px;color:var(--mu);font-weight:700;text-transform:uppercase;margin-top:2px}
+.gcard2 .g-what{color:var(--body);font-size:14px;line-height:1.6;margin-bottom:14px;padding-bottom:14px;border-bottom:1px dashed var(--br)}
+.gcard2 .g-steps{list-style:none;padding:0;margin:0}
+.gcard2 .g-steps li{position:relative;padding-left:26px;color:var(--body);font-size:13.5px;line-height:1.55;margin-bottom:8px}
+.gcard2 .g-steps li::before{content:attr(data-n);position:absolute;left:0;top:2px;width:18px;height:18px;border-radius:50%;background:var(--b);color:var(--w);font-family:var(--mo);font-size:10px;font-weight:700;display:grid;place-items:center}
+.gcard2 .g-tip{margin-top:12px;padding:10px 12px;border-radius:10px;background:var(--gl);border:1px dashed var(--g);color:#7c4a00;font-size:12.5px;line-height:1.55;font-weight:600}
+.gcard2 .g-tip b{color:var(--bd);font-weight:800}
+.station-card{background:var(--w);border:2px solid var(--br);border-radius:26px;padding:44px;text-align:center;box-shadow:0 12px 40px rgba(15,22,41,.1);max-width:640px;margin:40px auto;position:relative;overflow:hidden}
+.station-card::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(139,92,246,.08),rgba(49,75,150,.08));pointer-events:none}
+.station-card>*{position:relative;z-index:2}
+.station-icon{font-size:72px;line-height:1;margin-bottom:16px;display:block}
+.station-label{font-family:var(--mo);font-size:11.5px;letter-spacing:2.4px;color:var(--mu);font-weight:700;text-transform:uppercase;margin-bottom:10px}
+.station-team{font-family:var(--se);font-size:clamp(30px,5vw,44px);font-weight:800;color:var(--bd);letter-spacing:-1px;line-height:1.15;margin-bottom:16px}
+.station-pts-label{font-family:var(--mo);font-size:11px;letter-spacing:2px;color:var(--mu);font-weight:700;text-transform:uppercase;margin-bottom:4px}
+.station-pts{font-family:var(--se);font-size:56px;font-weight:900;color:var(--gd);letter-spacing:-2px;line-height:1;margin-bottom:8px}
+.station-sub{color:var(--mu);font-size:15px;line-height:1.6;margin-bottom:26px}
+.station-next{margin-top:22px;padding:16px 20px;border-radius:14px;background:var(--bl);border:1.5px dashed var(--bm);font-size:14px;color:var(--bd);font-weight:600;line-height:1.5}
+.station-next b{color:var(--b);font-weight:800}
+.station-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px}
+footer{margin-top:60px;text-align:center;color:var(--mu);font-family:var(--mo);font-size:11px;letter-spacing:1.2px;font-weight:700;line-height:1.8}
+footer b{color:var(--b);font-weight:700}
+footer .sep{color:var(--g);margin:0 8px}
+@media(max-width:880px){.grades,.units,.options,.grid2,.achv,.names,.guide-grid{grid-template-columns:1fr}.options.binary{grid-template-columns:1fr}.stats-row{grid-template-columns:1fr 1fr}.logo-slot{width:60px;height:60px}.brand h1{font-size:18px}.setup-head{flex-direction:column}.opt-btn{min-width:auto}.station-card{padding:28px}.grid-numbers{grid-template-columns:repeat(5,1fr)}}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="brand">
+      <div class="logo-slot" id="logoSlot" title="Espacio para el logo institucional">
+       <img src="logo.png" alt="Logo INETFRADPAS">
+      </div>
+      <div class="brand-text">
+        <h1>Desafío <span class="accent">INETFRADPAS</span></h1>
+        <small>Tecnología · Informática · Artística</small>
+      </div>
+    </div>
+    <div class="tools">
+      <button class="btn ghost" id="btnGuide">📖 Guía de retos</button>
+      <button class="btn ghost" id="btnSound">🔊 Sonido: ON</button>
+      <button class="btn ghost" id="btnHome">🏠 Inicio</button>
+    </div>
+  </header>
+
+  <section id="home">
+    <div class="hero">
+      <span class="kicker">3 grados · 9 unidades · 450 retos · hasta 20 equipos</span>
+      <h2>Aprende, juega<br>y <em>conquista cada unidad.</em></h2>
+      <p>Siete tipos de reto, banco de 50 preguntas únicas por unidad, power-ups, rondas bonus y <b>cuatro modos de equipo</b>: por turnos, avanza si aciertas, equitativo y por estaciones. Las respuestas se barajan en cada partida.</p>
+      <div class="hero-cta">
+        <button class="btn primary" id="btnGo">🎯 Elegir grado</button>
+        <button class="btn gold" id="btnGuide2">📖 Guía de retos</button>
+        <button class="btn" id="btnRules">📋 Cómo se juega</button>
+      </div>
+    </div>
+    <div class="grades">
+      <button class="gcard" data-grade="g6"><div class="gband"><span class="ico-bg">🌐</span><span class="badge">6° · Tecnología</span></div><div class="gbody"><h3>Tecnología e Informática</h3><p>De la historia de la tecnología al dominio de Word y la programación con Scratch.</p><div class="gmeta"><span>3 unidades</span><span>150 retos</span><span class="arrow">→</span></div></div></button>
+      <button class="gcard" data-grade="g7"><div class="gband"><span class="ico-bg">🤖</span><span class="badge">7° · Tecnología</span></div><div class="gbody"><h3>Código, diseño e IA</h3><p>Programación intermedia, presentaciones digitales e inteligencia artificial.</p><div class="gmeta"><span>3 unidades</span><span>150 retos</span><span class="arrow">→</span></div></div></button>
+      <button class="gcard" data-grade="g8"><div class="gband gold-accent"><span class="ico-bg">🎨</span><span class="badge">8° · Artística</span></div><div class="gbody"><h3>Color, arte y personajes</h3><p>Psicología del color, movimientos artísticos, historieta manga y esténcil.</p><div class="gmeta"><span>3 unidades</span><span>150 retos</span><span class="arrow">→</span></div></div></button>
+    </div>
+    <footer><b>Desafío INETFRADPAS</b> · Juego Curricular<span class="sep">•</span>Tecnología 6° · Tecnología 7° · Artística 8°</footer>
+  </section>
+
+  <section id="rules" class="hidden">
+    <div class="panel">
+      <div class="backrow"><button class="btn ghost" id="btnBackHome">← Volver</button><button class="btn ghost" id="btnGuide3">📖 Guía de retos</button></div>
+      <h2>Cómo se juega</h2>
+      <div class="grid2">
+        <div>
+          <h3>Modo individual</h3>
+          <ul><li>9 retos por unidad (8 + jefe final).</li><li>25 s por reto. El tiempo restante suma puntos.</li><li>Con 3 fallos, terminas. Cada 3 aciertos: recuperas energía y ganas power-up.</li></ul>
+          <h3>Modo equipos · 4 submodos</h3>
+          <ul>
+            <li><b>🔄 Por turnos</b>: cada reto rota al siguiente equipo.</li>
+            <li><b>🔥 Avanza si aciertas</b>: el equipo sigue si acierta; pasa si falla.</li>
+            <li><b>⚖️ Equitativo</b>: todos responden el mismo número de retos.</li>
+            <li><b>🎬 Por estaciones</b>: cada equipo juega su sesión completa y pasa el dispositivo.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Aleatorización de respuestas</h3>
+          <ul>
+            <li>Cada partida baraja las opciones de cada pregunta.</li>
+            <li>Así no se puede adivinar por posición ("siempre la primera").</li>
+          </ul>
+          <h3>Equipos (2 a 20)</h3>
+          <ul>
+            <li>Elige cuántas escuadras (2-20).</li>
+            <li>El juego ajusta los retos por equipo automáticamente.</li>
+            <li>Con muchos equipos, el marcador se hace compacto.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="units" class="hidden">
+    <div class="backrow"><button class="btn ghost" id="btnBackGrades">← Cambiar grado</button><button class="btn ghost" id="btnRules2">📋 Cómo se juega</button></div>
+    <h2 id="gradeTitle">—</h2>
+    <p id="gradeSub" style="color:var(--mu);font-size:15px;line-height:1.7;max-width:680px">—</p>
+    <div class="mode-bar" style="margin-top:24px">
+      <span class="label">Modo de juego</span><div class="spacer"></div>
+      <button class="mode-opt active" data-mode="solo">👤 Individual</button>
+      <button class="mode-opt" data-mode="team">👥 Equipos</button>
+    </div>
+    <div class="units" id="unitList"></div>
+  </section>
+
+  <section id="setup" class="hidden">
+    <div class="panel">
+      <div class="backrow"><button class="btn ghost" id="btnBackUnits">← Cambiar unidad</button></div>
+      <div class="setup-head"><div class="uico" id="setupIco">🎯</div><div><h2 id="setupTitle">Configurar torneo</h2><p id="setupSub">—</p></div></div>
+      <h3>Modo de equipos</h3>
+      <div class="opt-row" id="teamModeRow">
+        <button class="opt-btn sel" data-mode="rotate"><span>🔄 Por turnos</span><small>Cada reto rota al siguiente equipo</small></button>
+        <button class="opt-btn" data-mode="streak"><span>🔥 Avanza si aciertas</span><small>El equipo sigue si acierta; pasa si falla</small></button>
+        <button class="opt-btn" data-mode="equitativo"><span>⚖️ Equitativo</span><small>Todos responden la misma cantidad</small></button>
+        <button class="opt-btn" data-mode="stations"><span>🎬 Por estaciones</span><small>Un equipo juega completo y pasa el dispositivo</small></button>
+      </div>
+      <h3 style="margin-top:26px">Número de escuadras <span style="font-family:var(--sa);text-transform:none;letter-spacing:0;color:var(--mu);font-weight:500;font-size:12px">(2 a 20)</span></h3>
+      <div class="grid-numbers" id="teamCount"></div>
+      <h3 style="margin-top:32px">Nombres <span style="font-family:var(--sa);text-transform:none;letter-spacing:0;color:var(--mu);font-weight:500;font-size:12px">(se guardan automáticamente)</span></h3>
+      <div class="names" id="teamNames"></div>
+      <h3 style="margin-top:26px">Cantidad de retos</h3>
+      <p style="color:var(--mu);font-size:13px;margin-top:-4px;font-family:var(--mo)">Nunca se repite una pregunta. Banco: 50 únicos.</p>
+      <div class="opt-row" id="rondaCount"></div>
+      <div class="suggest-hint" id="suggestHint">Selecciona el número de equipos para ver la sugerencia.</div>
+      <div class="fair-hint hidden" id="fairHint"></div>
+      <div style="margin-top:30px;display:flex;gap:12px;flex-wrap:wrap"><button class="btn primary" id="btnStartTeams">🏁 Comenzar torneo</button><button class="btn ghost" id="btnCancelSetup">Cancelar</button></div>
+    </div>
+  </section>
+
+  <section id="game" class="hidden">
+    <div class="hud">
+      <div class="chip"><span class="dot"></span><span id="hudUnit">UNIDAD</span></div>
+      <div class="chip" id="hudProgress">Reto 1 de 9</div>
+      <div class="chip hidden" id="hudTeamMode"><span id="hudTeamModeIcon">🔄</span> <span id="hudTeamModeText">Por turnos</span></div>
+      <div class="spacer"></div>
+      <div id="hudCombo" class="hidden">Combo x2</div>
+      <div class="stat" id="statScoreBox"><small id="statScoreLbl">Puntos</small><b id="hudScore">0</b></div>
+      <div class="stat"><small>Tiempo</small><b id="hudTime">25</b></div>
+      <div class="stat" id="statLivesBox"><small>Energía</small><b id="hudLives">● ● ●</b></div>
+      <button class="btn ghost" id="btnQuit">Salir</button>
+    </div>
+    <div class="scoreboard hidden" id="scoreboard"></div>
+    <div class="progressbar"><div id="progFill"></div></div>
+    <div class="powerups" id="powerups">
+      <button class="pw" data-pw="fifty"><b>50/50</b> <span class="cnt">×1</span></button>
+      <button class="pw" data-pw="time"><b>+10s</b> <span class="cnt">×1</span></button>
+      <button class="pw" data-pw="skip"><b>Saltar</b> <span class="cnt">×1</span></button>
+      <button class="pw" data-pw="x2"><b>x2</b> <span class="cnt">×1</span></button>
+    </div>
+    <div class="timerbar"><div id="timerFill"></div></div>
+    <div class="qcard" id="qcard">
+      <div class="qbadge-row">
+        <div class="qbadge" id="qBadge">Elige</div>
+        <button class="qhelp" id="btnQHelp" title="¿Cómo se resuelve este tipo de reto?">?</button>
+      </div>
+      <h2 id="qText">Cargando reto…</h2>
+      <div class="hint" id="qHint">Usa las teclas 1-4 o haz clic en la respuesta.</div>
+      <div class="options" id="options"></div>
+      <div id="multiBar"></div>
+      <div id="feedbackBox"></div>
+    </div>
+  </section>
+
+  <section id="station" class="hidden">
+    <div class="station-card">
+      <span class="station-icon" id="stIcon">✅</span>
+      <div class="station-label" id="stLabel">Turno completado</div>
+      <div class="station-team" id="stTeam">Equipo 1</div>
+      <div class="station-pts-label">Puntaje de este turno</div>
+      <div class="station-pts" id="stPts">0</div>
+      <div class="station-sub" id="stSub">¡Buen trabajo! Pasa el dispositivo al siguiente equipo.</div>
+      <div class="station-next" id="stNext"></div>
+      <div class="station-actions">
+        <button class="btn primary big" id="btnNextStation">▶ Comenzar siguiente turno</button>
+        <button class="btn ghost" id="btnQuitStation">Salir del torneo</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="end" class="hidden">
+    <div class="panel">
+      <div class="end-wrap">
+        <div class="stars" id="endStars">★★★</div>
+        <h2 id="endTitle">Unidad completada</h2>
+        <p id="endMsg">Buen trabajo.</p>
+        <div class="podium hidden" id="podium"></div>
+        <div class="achv" id="achv"></div>
+        <div class="stats-row" id="endStats" style="margin-top:20px">
+          <div class="estat"><small>Puntaje</small><b id="endScore">0</b></div>
+          <div class="estat"><small>Aciertos</small><b id="endCorrect">0/0</b></div>
+          <div class="estat"><small>Mejor combo</small><b id="endCombo">0</b></div>
+          <div class="estat"><small>Récord</small><b id="endRecord">0</b></div>
+        </div>
+        <div class="end-cta">
+          <button class="btn primary" id="btnRetry">🔁 Repetir unidad</button>
+          <button class="btn gold" id="btnOtherUnit">📚 Otra unidad</button>
+          <button class="btn ghost" id="btnEndHome">🏠 Inicio</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="guideOverlay" class="guide-overlay hidden">
+    <div class="guide-modal">
+      <button class="guide-close" id="btnGuideClose">×</button>
+      <h2>Guía de retos</h2>
+      <p class="intro">Cada tipo de reto tiene su propia lógica. Aprende cómo se resuelve cada uno antes de jugar.</p>
+      <div class="guide-grid" id="guideGrid"></div>
+    </div>
+  </div>
+</div>
+<script>
+const C={
+g6:{name:"Tecnología e Informática",sub:"Grado 6° · Énfasis en ofimática y pensamiento lógico",units:[
+{ico:"🌐",name:"Tecnología e Informática",desc:"Definición, evolución, inventos, TIC e Internet.",qs:[
+{t:"choice",q:"¿Qué es la tecnología?",o:["El conjunto de conocimientos y herramientas que satisfacen necesidades humanas","Solo los celulares y computadoras","Un invento de los últimos años","Solo los aparatos eléctricos"],a:0,e:"La tecnología es mucho más que aparatos."},
+{t:"choice",q:"¿Qué estudia la informática?",o:["El tratamiento automático de la información con computadoras","Los astros","Las plantas","Los idiomas"],a:0,e:"Informática = información + automática."},
+{t:"choice",q:"¿Cuál es un invento tecnológico antiguo?",o:["La rueda","El celular","El dron","La impresora 3D"],a:0,e:"Hace más de 5000 años."},
+{t:"order",q:"Ordena la evolución de la tecnología.",items:["Herramientas de piedra","La rueda y la agricultura","La máquina de vapor","Los computadores e Internet"],e:"Cada etapa resolvió un problema nuevo."},
+{t:"choice",q:"¿Qué son las TIC?",o:["Tecnologías de la Información y la Comunicación","Talleres de Informática","Técnicas Industriales","Tipos de Impresoras"],a:0,e:"Permiten crear, guardar y transmitir información."},
+{t:"binary",q:"¿Cuál de estas herramientas es moderna?",o:["El teléfono inteligente","La piedra de afilar"],a:0,e:"Combina cámara, GPS, internet y más."},
+{t:"choice",q:"¿Qué es Internet?",o:["Una red mundial de computadoras conectadas","Un programa","Un tipo de computador","Una marca"],a:0,e:"Es una red de redes."},
+{t:"choice",q:"¿Cuál es un invento tecnológico moderno?",o:["El internet","El fuego","La escritura cuneiforme","La brújula"],a:0,e:"Década de 1960."},
+{t:"choice",q:"¿Diferencia entre ciencia y tecnología?",o:["La ciencia busca entender; la tecnología resolver necesidades","Son lo mismo","La tecnología es solo para empresas","La ciencia no sirve"],a:0,e:"Se necesitan mutuamente."},
+{t:"choice",q:"¿Qué es una necesidad humana?",o:["Algo indispensable para vivir o desarrollarse","Un capricho","Un lujo","Algo de tiendas"],a:0,e:"Motivan la invención."},
+{t:"binary",q:"¿La tecnología es solo aparatos electrónicos?",o:["SÍ","NO"],a:1,e:"La rueda y la escritura también son tecnología."},
+{t:"order",q:"Ordena cómo surge un invento.",items:["Se detecta una necesidad","Se investiga una solución","Se construye un prototipo","Se prueba y se mejora","Se produce y se distribuye"],e:"Los errores del prototipo son parte del proceso."},
+{t:"choice",q:"¿Qué es la innovación?",o:["Convertir una idea en algo útil para muchas personas","Copiar a otros","Guardar una idea","Comprar lo último"],a:0,e:"Inventar no basta."},
+{t:"binary",q:"¿El Internet existió siempre?",o:["SÍ","NO"],a:1,e:"Nació en los años 60."},
+{t:"choice",q:"¿Cuál invento cambió la comunicación a distancia?",o:["El teléfono","La imprenta","La calculadora","La bicicleta"],a:0,e:"1876."},
+{t:"choice",q:"¿Qué es un prototipo?",o:["Una primera versión que se prueba y se mejora","El producto final","Un plano","Una máquina"],a:0,e:"Todo invento pasa por prototipos."},
+{t:"choice",q:"¿Qué es la obsolescencia programada?",o:["Diseñar productos para que duren poco","Reparar productos","Reciclar","Un tipo de garantía"],a:0,e:"Acorta la vida útil para vender más."},
+{t:"choice",q:"¿Qué es la brecha digital?",o:["La desigualdad en el acceso a la tecnología","Una falla de internet","Un cable","Una marca"],a:0,e:"Afecta el acceso a educación y trabajo."},
+{t:"binary",q:"¿La tecnología puede tener efectos negativos?",o:["SÍ","NO"],a:0,e:"Contaminación, desechos, adicción, desinformación."},
+{t:"choice",q:"¿Qué es el desarrollo sostenible?",o:["Satisfacer necesidades sin comprometer a futuras generaciones","Producir lo máximo","Usar todo","No usar tecnología"],a:0,e:"Aplica también a la tecnología."},
+{t:"order",q:"Ordena la evolución de las computadoras.",items:["Ábaco y máquinas mecánicas","Primeras computadoras electrónicas","Computadoras personales","Portátiles y smartphones","IA integrada"],e:"En menos de 100 años."},
+{t:"choice",q:"¿Qué es la propiedad intelectual?",o:["El derecho sobre las creaciones de la mente","Una casa","Un impuesto","Un programa"],a:0,e:"Protege a los creadores."},
+{t:"binary",q:"¿Los desechos electrónicos se reciclan?",o:["SÍ","NO"],a:0,e:"Requieren manejo especial."},
+{t:"multi",q:"Selecciona TODOS los inventos tecnológicos antiguos.",o:["La rueda","La imprenta","El ábaco","El teléfono inteligente","El dron"],a:[0,1,2],e:"Rueda, imprenta y ábaco son antiguos."},
+{t:"choice",q:"¿Qué es un nativo digital?",o:["Persona que creció rodeada de tecnología digital","Alguien del campo","Un experto programador","Un computador"],a:0,e:"Nació después de los 80."},
+{t:"choice",q:"¿Para qué sirve un navegador web?",o:["Para acceder y visualizar páginas de Internet","Para escribir","Para programar","Para editar fotos"],a:0,e:"Chrome, Firefox, Edge, Safari."},
+{t:"binary",q:"¿El correo electrónico es más antiguo que el celular?",o:["SÍ","NO"],a:0,e:"Email 1971; celular 1983."},
+{t:"choice",q:"¿Qué es la ciudadanía digital?",o:["El uso responsable, seguro y ético de la tecnología","Vivir en una ciudad digital","Un documento","Un programa"],a:0,e:"Incluye respeto y pensamiento crítico."},
+{t:"choice",q:"¿Qué es una red social?",o:["Plataforma digital donde se conectan y comparten contenidos","Un grupo de amigos del barrio","Un computador","Un programa de oficina"],a:0,e:"Pensar antes de publicar."},
+{t:"choice",q:"¿Qué es el software?",o:["Los programas y datos de la computadora","Las partes físicas del computador","Un tipo de cable","Una marca de computador"],a:0,e:"Software es todo lo que no se puede tocar."},
+{t:"choice",q:"¿Qué es el hardware?",o:["Las partes físicas del computador","Los programas","Los datos","El sistema operativo"],a:0,e:"Hardware = todo lo que puedes tocar."},
+{t:"choice",q:"¿Qué significa WWW?",o:["World Wide Web","Web Wide World","Wide Web World","World Web Wide"],a:0,e:"WWW es la 'telaraña mundial'."},
+{t:"choice",q:"¿Qué es la nube (cloud)?",o:["Servidores remotos donde se guardan datos y se ejecutan servicios","El cielo donde vuelan los aviones","Un tipo de wifi","Un cable especial"],a:0,e:"Cuando subes una foto a Drive la estás guardando en la nube."},
+{t:"binary",q:"¿Los datos y la información son lo mismo?",o:["SÍ","NO"],a:1,e:"Datos son hechos crudos; información son datos procesados con significado."},
+{t:"choice",q:"¿Qué es una patente?",o:["Un derecho exclusivo para explotar un invento por un tiempo","Un tipo de computador","Una marca comercial","Un programa"],a:0,e:"Protegen inventos por 20 años."},
+{t:"choice",q:"¿Qué es un algoritmo (en palabras simples)?",o:["Una receta o conjunto de pasos ordenados para resolver algo","Un tipo de computador","Un programa específico","Una marca de software"],a:0,e:"El algoritmo es la idea ordenada."},
+{t:"choice",q:"¿Qué es un bit?",o:["La unidad más pequeña de información: un 0 o un 1","Un tipo de computador","Un programa","Un cable de red"],a:0,e:"Un bit es 0 o 1. Ocho bits forman un byte."},
+{t:"binary",q:"¿El progreso tecnológico es siempre bueno para todos?",o:["SÍ","NO"],a:1,e:"Puede generar desigualdad, desechos y adicción."},
+{t:"choice",q:"¿Qué significa que un aparato sea 'inteligente'?",o:["Que puede conectarse, procesar datos y tomar decisiones básicas","Que piensa como un humano","Que es muy caro","Que tiene pantalla"],a:0,e:"'Inteligente' = conectado y capaz de procesar información."},
+{t:"choice",q:"¿Qué es la ciberseguridad?",o:["El conjunto de prácticas para proteger datos y sistemas de ataques","Un tipo de antivirus","Una red social","Un programa de oficina"],a:0,e:"Contraseñas fuertes, actualizaciones, respaldos."},
+{t:"choice",q:"¿Cuál es una contraseña segura?",o:["Una frase larga con mayúsculas, números y símbolos","12345678","Tu nombre completo","Tu fecha de nacimiento"],a:0,e:"Larga (12+), única por servicio, sin datos personales."},
+{t:"binary",q:"¿Conviene usar la misma contraseña en todos los sitios?",o:["SÍ","NO"],a:1,e:"Si hackean un sitio, tendrían acceso a todos."},
+{t:"choice",q:"¿Qué es la huella digital?",o:["El rastro de datos que dejamos al usar internet","Una marca en el dedo","Un tipo de archivo","Una red social"],a:0,e:"Publicaciones, me gusta, búsquedas, ubicación."},
+{t:"choice",q:"¿Qué es la robótica?",o:["La ciencia que diseña, construye y programa robots","Un tipo de computador","Un videojuego","Una red social"],a:0,e:"Combina mecánica, electrónica, informática e IA."},
+{t:"binary",q:"¿Un dron es útil en agricultura?",o:["SÍ","NO"],a:0,e:"Monitorean cultivos, fumigan con precisión."},
+{t:"choice",q:"¿Qué es la domótica?",o:["La automatización de una casa: luces, clima, seguridad","Un tipo de casa","Un programa de oficina","Un tipo de wifi"],a:0,e:"Controlas tu casa desde el celular y ahorras energía."},
+{t:"choice",q:"¿Qué es la telemedicina?",o:["La atención médica a distancia usando tecnología","Una medicina moderna","Un tipo de hospital","Un programa de TV"],a:0,e:"Videollamadas, monitoreo remoto, recetas electrónicas."},
+{t:"binary",q:"¿La tecnología verde busca reducir el impacto ambiental?",o:["SÍ","NO"],a:0,e:"Energías renovables, reciclaje, diseño eficiente."},
+{t:"choice",q:"¿Qué es la ética digital?",o:["Los principios para usar la tecnología de forma justa y respetuosa","Un tipo de programa","Una ley de internet","Una red social"],a:0,e:"Respeto a la privacidad, veracidad, no discriminación."},
+{t:"order",boss:true,q:"RETO JEFE: ordena la línea de tiempo tecnológica.",items:["Era de piedra","Antigüedad: agricultura y escritura","Edad moderna: imprenta","Revolución industrial: vapor","Era digital: computadoras e Internet"],e:"Cada era resolvió un problema distinto."}
+]},
+{ico:"📝",name:"Procesador de Texto (Word)",desc:"Ventana, formato, alineación, imágenes y edición.",qs:[
+{t:"choice",q:"¿Para qué sirve Word?",o:["Para crear y editar documentos escritos","Para hacer videos","Para programar","Para navegar"],a:0,e:"El procesador más usado."},
+{t:"choice",q:"¿Cómo se abre Word?",o:["Desde el menú Inicio o el ícono del escritorio","Con la tecla Enter","Apagando el equipo","Solo desde internet"],a:0,e:"También con doble clic."},
+{t:"order",q:"Ordena los pasos para crear un documento.",items:["Abrir Word","Escribir el texto","Aplicar formato","Guardar el documento"],e:"Guardar seguido."},
+{t:"choice",q:"¿Qué hace Guardar?",o:["Conserva el documento","Borra el texto","Imprime","Cierra sin guardar"],a:0,e:"Ctrl+G."},
+{t:"choice",q:"¿Qué es la fuente?",o:["El tipo de letra","El color del papel","El tamaño de la hoja","El nombre del archivo"],a:0,e:"Arial, Times, Verdana."},
+{t:"choice",q:"¿Cómo se cambia el color del texto?",o:["Seleccionas el texto y eliges el color","Escribiendo el color","Se cambia solo","Con Shift"],a:0,e:"Primero seleccionar."},
+{t:"binary",q:"¿Qué hace el botón de líneas centradas?",o:["Centra el texto","Alinea a la izquierda"],a:0,e:"Izq, centro, der, justificado."},
+{t:"choice",q:"¿Cómo se inserta una imagen?",o:["Desde Insertar > Imágenes","Con Ctrl+Z","Escribiendo el nombre","No se puede"],a:0,e:"Enriquece documentos."},
+{t:"choice",q:"¿Qué es un atajo de teclado?",o:["Combinación que ejecuta un comando rápidamente","Un tipo de letra","Una carpeta","Un error"],a:0,e:"Ctrl+C, V, G, Z."},
+{t:"choice",q:"¿Qué hace Ctrl+Z?",o:["Deshace la última acción","Guarda","Cierra","Imprime"],a:0,e:"Botón de emergencia."},
+{t:"binary",q:"¿Se puede insertar una tabla en Word?",o:["SÍ","NO"],a:0,e:"Insertar > Tabla."},
+{t:"order",q:"Ordena los pasos para guardar como PDF.",items:["Tener el documento abierto","Clic en Archivo","Elegir Guardar como","Seleccionar PDF","Elegir ubicación y guardar"],e:"PDF conserva el diseño."},
+{t:"choice",q:"¿Qué es el interlineado?",o:["El espacio entre líneas","El color de fondo","El tamaño del papel","El nombre del archivo"],a:0,e:"1,5 suele leerse mejor."},
+{t:"choice",q:"¿Cómo se inserta un encabezado?",o:["Desde Insertar > Encabezado","Escribiendo 'encabezado'","Con Ctrl+P","No se puede"],a:0,e:"Título, nombre, fecha."},
+{t:"binary",q:"¿Guardar y Guardar como son lo mismo?",o:["SÍ","NO"],a:1,e:"El segundo permite cambiar nombre o ubicación."},
+{t:"choice",q:"¿Qué hace Ctrl+P?",o:["Abre la ventana de impresión","Pega texto","Cambia de color","Cierra"],a:0,e:"Revisa vista previa."},
+{t:"choice",q:"¿Qué es un margen?",o:["El espacio entre el borde y el texto","Una fuente","El título","Un color"],a:0,e:"Permite respirar el texto."},
+{t:"choice",q:"¿Qué es un salto de página?",o:["Un comando que empuja el texto a la página siguiente","Un error","Una letra","Una imagen"],a:0,e:"Útil para temas nuevos."},
+{t:"binary",q:"¿Se puede cambiar el idioma del corrector?",o:["SÍ","NO"],a:0,e:"Revisar > Idioma."},
+{t:"choice",q:"¿Cómo se crea una lista con viñetas?",o:["Seleccionando el texto y clic en el botón de viñetas","Con guiones","Con Ctrl+B","No se puede"],a:0,e:"Enumera sin jerarquía."},
+{t:"order",q:"Ordena cómo insertar una tabla.",items:["Ubicar el cursor","Clic en Insertar > Tabla","Elegir filas y columnas","Escribir el contenido","Ajustar formato"],e:"Tab agrega filas."},
+{t:"choice",q:"¿Qué es el formato de página?",o:["Configuración de tamaño, orientación y márgenes","Una fuente","Un color","El nombre del archivo"],a:0,e:"Carta, oficio, A4."},
+{t:"binary",q:"¿Se pueden insertar comentarios?",o:["SÍ","NO"],a:0,e:"Revisar > Nuevo comentario."},
+{t:"multi",q:"Selecciona TODAS las partes de la ventana de Word.",o:["Cinta de opciones","Barra de título","Área de trabajo","Inicio de Windows","Barra del sistema"],a:[0,1,2],e:"Cinta, título y área son parte de Word."},
+{t:"choice",q:"¿Qué es la vista previa?",o:["Muestra cómo quedará al imprimir","Una fuente","Un archivo adjunto","Un efecto"],a:0,e:"Evita imprimir con errores."},
+{t:"choice",q:"¿Para qué sirve el botón deshacer?",o:["Revertir la última acción","Guardar","Imprimir","Cerrar"],a:0,e:"Barra de acceso rápido."},
+{t:"choice",q:"¿Qué es un documento .docx?",o:["El formato de archivo de Word","Un tipo de imagen","Un programa","Una carpeta"],a:0,e:"Estándar desde 2007."},
+{t:"binary",q:"¿Se puede justificar el texto?",o:["SÍ","NO"],a:0,e:"Alineación justificada."},
+{t:"choice",q:"¿Qué es la sangría?",o:["El espacio al inicio de un párrafo","Un color","Una fuente","Un borde"],a:0,e:"Marca el inicio del párrafo."},
+{t:"choice",q:"¿Qué hace Ctrl+B?",o:["Pone el texto en negrita","Lo pone en cursiva","Lo subraya","Borra el texto"],a:0,e:"Ctrl+B = negrita."},
+{t:"choice",q:"¿Qué hace Ctrl+I?",o:["Pone el texto en cursiva","Lo pone en negrita","Lo subraya","Lo borra"],a:0,e:"Ctrl+I = itálica."},
+{t:"choice",q:"¿Qué hace Ctrl+U?",o:["Subraya el texto","Lo pone en negrita","Lo pone en cursiva","Lo borra"],a:0,e:"Ctrl+U = underline."},
+{t:"choice",q:"¿Para qué sirve WordArt?",o:["Para crear títulos decorativos con estilos llamativos","Para hacer tablas","Para insertar imágenes","Para revisar ortografía"],a:0,e:"Útil para portadas."},
+{t:"binary",q:"¿Un estilo en Word aplica varios formatos a la vez?",o:["SÍ","NO"],a:0,e:"Título 1, Título 2 aplican fuente, tamaño, color y espaciado."},
+{t:"choice",q:"¿Qué es un hipervínculo?",o:["Un texto o imagen que, al hacer clic, lleva a otra parte o web","Un tipo de fuente","Una tabla","Un comentario"],a:0,e:"Con Ctrl+K insertas un enlace."},
+{t:"choice",q:"¿Qué es una tabla de contenido?",o:["Un índice automático generado a partir de los títulos del documento","Una tabla con números","Una lista de imágenes","Una bibliografía"],a:0,e:"Si marcas títulos con estilos, Word arma el índice."},
+{t:"choice",q:"¿Qué es una nota al pie?",o:["Una aclaración al final de la página con una marca en el texto","Un comentario al margen","Un título","Un dibujo"],a:0,e:"Sirven para citar fuentes."},
+{t:"binary",q:"¿Se puede insertar un símbolo como π o © en Word?",o:["SÍ","NO"],a:0,e:"Insertar > Símbolo."},
+{t:"choice",q:"¿Qué es el interlineado 1,5?",o:["Un espacio y medio entre líneas, que mejora la legibilidad","Doble espacio","Sin espacio","Triple espacio"],a:0,e:"Hace los textos más fáciles de leer."},
+{t:"choice",q:"¿Qué son las columnas en Word?",o:["Una forma de dividir el texto en dos o más columnas verticales","Un tipo de tabla","Un color","Un tipo de letra"],a:0,e:"Útil para periódicos y folletos."},
+{t:"choice",q:"¿Para qué sirve cambiar la orientación de la página?",o:["Para pasar de vertical a horizontal, útil para tablas anchas o imágenes","Para cambiar el color","Para cambiar la letra","Para imprimir más rápido"],a:0,e:"Disposición > Orientación."},
+{t:"binary",q:"¿Se pueden insertar formas (círculos, flechas, cuadros) en Word?",o:["SÍ","NO"],a:0,e:"Insertar > Formas."},
+{t:"choice",q:"¿Qué es un encabezado distinto en la primera página?",o:["Un encabezado especial que solo aparece en la primera página","Un encabezado en otro idioma","Un tipo de letra","Una tabla"],a:0,e:"Ideal para portadas."},
+{t:"choice",q:"¿Qué es el control de cambios en Word?",o:["Una función que registra las ediciones para que otro las acepte o rechace","Un tipo de letra","Un programa","Una tabla"],a:0,e:"Cada cambio queda marcado con autor y fecha."},
+{t:"binary",q:"¿Se pueden comparar dos versiones de un documento en Word?",o:["SÍ","NO"],a:0,e:"Revisar > Comparar."},
+{t:"choice",q:"¿Qué son las plantillas de Word?",o:["Documentos prediseñados que puedes reutilizar cambiando el contenido","Tipos de letra","Imágenes prediseñadas","Programas"],a:0,e:"Cartas, informes, currículums."},
+{t:"choice",q:"¿Qué es la letra capital?",o:["Una letra grande al inicio de un párrafo, que ocupa varias líneas","Un tipo de letra","Un color","Una imagen"],a:0,e:"Se usa en cuentos y revistas."},
+{t:"binary",q:"¿Se puede insertar una marca de agua en el fondo de un documento?",o:["SÍ","NO"],a:0,e:"Diseño > Marca de agua."},
+{t:"choice",q:"¿Para qué sirve combinar correspondencia?",o:["Para generar cartas o etiquetas personalizadas para muchas personas","Para corregir ortografía","Para imprimir más rápido","Para cambiar el color"],a:0,e:"Con una plantilla y una lista, Word crea las cartas."},
+{t:"order",boss:true,q:"RETO JEFE: ordena el proceso de un documento.",items:["Abrir Word","Escribir el texto","Aplicar fuente, tamaño, color y alineación","Insertar imagen o tabla","Corregir ortografía y guardar"],e:"Redactar, formatear, enriquecer, revisar y guardar."}
+]},
+{ico:"🐱",name:"Programación con Scratch",desc:"Eventos, movimientos, apariencia, sonido y secuencias.",qs:[
+{t:"choice",q:"¿Qué bloque arranca con la bandera verde?",o:["Al presionar [bandera verde]","Mover 10 pasos","Esperar 1 segundo","Decir Hola"],a:0,e:"Sin evento no se ejecuta nada."},
+{t:"order",q:"Ordena los pasos para una historia animada.",items:["Elegir escenario y personajes","Programar la secuencia","Probar con la bandera verde","Corregir y mejorar"],e:"Diseñar, programar, probar, corregir."},
+{t:"choice",q:"¿Qué es un sprite?",o:["Un personaje u objeto programable","Un sonido","Un bloque","El fondo"],a:0,e:"Actor de la animación."},
+{t:"choice",q:"¿Cuántos giros de 90° para una vuelta?",o:["4","2","3","10"],a:0,e:"90×4=360."},
+{t:"order",q:"Ordena la secuencia para saludar y aplaudir.",items:["Al presionar bandera","Decir: ¡Hola!","Esperar 1 segundo","Tocar sonido de aplauso"],e:"Evento + apariencia + tiempo + sonido."},
+{t:"choice",q:"¿Qué sirve para repetir sin copiar?",o:["Los bloques de control","El bloque decir","El disfraz","Guardar"],a:0,e:"Los ciclos abrevian."},
+{t:"choice",q:"¿Para qué sirve 'esperar 1 segundo'?",o:["Para dar ritmo","Para acelerar","Para guardar","Para cambiar disfraz"],a:0,e:"Sin pausas todo ocurre a la vez."},
+{t:"choice",q:"Si el programa no funciona, ¿qué haces?",o:["Depurar: revisar, probar y corregir","Borrar todo","Agregar al azar","Pedir a otro"],a:0,e:"Depurar es clave."},
+{t:"choice",q:"¿Qué son las coordenadas?",o:["Los valores x e y de la posición","Los colores","Los sonidos","Los bloques"],a:0,e:"x=izq-der, y=arriba-abajo."},
+{t:"choice",q:"¿Qué es el escenario?",o:["El fondo donde se mueven los sprites","Un bloque","Una variable","Un sonido"],a:0,e:"Puede tener varios fondos."},
+{t:"binary",q:"¿Se pueden tener varios sprites?",o:["SÍ","NO"],a:0,e:"Cada uno con sus bloques y trajes."},
+{t:"order",q:"Ordena cómo crear un bucle que salude 5 veces.",items:["Al presionar bandera","Repetir 5 veces","Decir ¡Hola!","Esperar 1 segundo"],e:"Repetir 5 ejecuta lo que está dentro."},
+{t:"choice",q:"¿Para qué sirven los operadores?",o:["Para hacer cálculos y comparaciones","Para mover","Para cambiar de fondo","Para reproducir sonidos"],a:0,e:"Base de la lógica."},
+{t:"choice",q:"¿Cómo se agrega un sonido?",o:["Desde la pestaña Sonidos del sprite","Con el bloque mover","Arrastrando un evento","Escribiendo 'sonido'"],a:0,e:"Cada sprite tiene su pestaña."},
+{t:"binary",q:"¿Los bloques se arrastran?",o:["SÍ","NO"],a:0,e:"Esencia de la programación visual."},
+{t:"choice",q:"¿Qué es un mensaje en Scratch?",o:["Un aviso que un sprite envía y otro recibe","Un sonido","Un color","Un disfraz"],a:0,e:"Coordina sprites."},
+{t:"choice",q:"¿Cómo se duplica un sprite?",o:["Clic derecho > Duplicar","Con Ctrl+V en el escenario","No se puede","Escribiendo 'duplicar'"],a:0,e:"Útil para enemigos."},
+{t:"choice",q:"¿Para qué sirve 'detener todo'?",o:["Para frenar todos los programas","Para borrar","Para cambiar de fondo","Para guardar"],a:0,e:"Freno de emergencia."},
+{t:"choice",q:"¿Qué son las extensiones?",o:["Bloques extra con funciones nuevas","Sonidos","Trajes","Carpetas"],a:0,e:"Música, lápiz, video, texto a voz."},
+{t:"order",q:"Ordena cómo crear un juego de atrapar.",items:["Elegir sprite que atrapa y que cae","Programar movimiento con teclas","Programar la caída","Agregar puntos al tocarse","Probar y ajustar"],e:"Empieza simple."},
+{t:"binary",q:"¿Los sprites pueden tener varios disfraces?",o:["SÍ","NO"],a:0,e:"Cada sprite puede tener varios."},
+{t:"choice",q:"¿Qué es la paleta de bloques?",o:["Zona donde se organizan bloques por color","Una tienda","El nombre del proyecto","Un sonido"],a:0,e:"Cada color agrupa un tipo."},
+{t:"binary",q:"¿Se puede guardar en la nube?",o:["SÍ","NO"],a:0,e:"Con cuenta accedes desde cualquier lugar."},
+{t:"multi",q:"Selecciona TODOS los bloques de EVENTOS.",o:["Al presionar bandera verde","Al hacer clic en el sprite","Al recibir un mensaje","Mover 10 pasos","Decir Hola"],a:[0,1,2],e:"Los eventos disparan el código."},
+{t:"choice",q:"¿Qué es la programación visual?",o:["Programar arrastrando bloques","Escribir código","Solo imágenes","Sin computador"],a:0,e:"Scratch, Blockly, App Inventor."},
+{t:"choice",q:"¿Qué son los bloques de control?",o:["Los que dirigen el flujo: repetir, si entonces","Los que mueven","Los que cambian color","Los de sonido"],a:0,e:"Controlan cuándo ocurre todo."},
+{t:"choice",q:"¿Cómo se prueba un proyecto?",o:["Con la bandera verde","Con el botón guardar","Cerrando Scratch","Solo al publicar"],a:0,e:"Se prueba muchas veces."},
+{t:"binary",q:"¿Scratch tiene versión online y offline?",o:["SÍ","NO"],a:0,e:"Online: scratch.mit.edu."},
+{t:"choice",q:"¿Qué hace el bloque 'repetir hasta que'?",o:["Repite la acción hasta que se cumpla una condición","Repite 10 veces","Pregunta algo","Detiene todo"],a:0,e:"Repite mientras la condición sea falsa."},
+{t:"choice",q:"¿Qué es un bloque 'por siempre si'?",o:["Evalúa la condición todo el tiempo y actúa cuando se cumple","Un bloque de sonido","Un tipo de disfraz","Un tipo de sprite"],a:0,e:"Hace que un sprite reaccione continuamente."},
+{t:"binary",q:"¿Se pueden duplicar disfraces en Scratch?",o:["SÍ","NO"],a:0,e:"Clic derecho > Duplicar."},
+{t:"choice",q:"¿Qué es el área de trabajo en Scratch?",o:["La zona donde arrastras y conectas los bloques","La pantalla del escenario","La lista de sprites","El botón de guardar"],a:0,e:"Está en el centro."},
+{t:"choice",q:"¿Para qué sirve la función 'clonar'?",o:["Para crear copias de un sprite en tiempo de ejecución","Para borrar el sprite","Para cambiar su disfraz","Para duplicar el escenario"],a:0,e:"Útil para lluvia, enemigos o elementos que se multiplican."},
+{t:"binary",q:"¿Se pueden grabar sonidos propios en Scratch?",o:["SÍ","NO"],a:0,e:"Con la pestaña Sonidos."},
+{t:"choice",q:"¿Qué es un bloque personalizado (función)?",o:["Un bloque que tú creas con un nombre propio","Un bloque del sistema","Una variable global","Un disfraz especial"],a:0,e:"Agrupa bloques que vas a usar muchas veces."},
+{t:"choice",q:"¿Qué es el 'modo turbo' en Scratch?",o:["Un modo que hace que los ciclos se ejecuten más rápido","Un juego de carreras","Un tipo de sprite","Una categoría de bloques"],a:0,e:"Shift+clic en la bandera verde."},
+{t:"binary",q:"¿Se puede descargar el proyecto de Scratch al computador?",o:["SÍ","NO"],a:0,e:"Archivo > Guardar en tu computadora."},
+{t:"choice",q:"¿Qué es un comentario en Scratch?",o:["Una nota que puedes dejar junto al código para explicarlo","Un tipo de bloque","Un sonido","Un disfraz"],a:0,e:"Los comentarios son para humanos."},
+{t:"choice",q:"¿Qué es una variable booleana?",o:["Una variable que solo puede ser verdadero o falso","Una variable numérica","Una lista","Un disfraz"],a:0,e:"'Está tocando', 'es mayor que', 'está activo'."},
+{t:"choice",q:"¿Para qué sirve una lista en Scratch?",o:["Para guardar varios valores a la vez, como nombres o puntajes","Para crear un sprite","Para cambiar de fondo","Para reproducir sonidos"],a:0,e:"Guardan datos ordenados."},
+{t:"choice",q:"¿Qué es un operador de comparación?",o:["Un operador que compara dos valores: mayor, menor, igual","Un tipo de sonido","Un bloque de movimiento","Un disfraz"],a:0,e:"Base de las decisiones."},
+{t:"binary",q:"¿Scratch tiene bloques de sensores como '¿tocando el borde?'",o:["SÍ","NO"],a:0,e:"Están en la paleta de Sensores."},
+{t:"choice",q:"¿Qué es un cronómetro en Scratch?",o:["Un bloque que cuenta el tiempo transcurrido","Un tipo de sprite","Una variable","Un fondo"],a:0,e:"Sirve para carreras o limitar tiempo."},
+{t:"binary",q:"¿Se pueden cambiar los fondos del escenario durante el programa?",o:["SÍ","NO"],a:0,e:"Con 'cambiar fondo a…'."},
+{t:"choice",q:"¿Qué es 'guardar como copia' en Scratch?",o:["Guardar una versión nueva sin reemplazar la original","Borrar el proyecto","Publicarlo","Cambiar el nombre"],a:0,e:"Útil para probar sin perder."},
+{t:"binary",q:"¿Se puede publicar un proyecto de Scratch?",o:["SÍ","NO"],a:0,e:"Con el botón Compartir."},
+{t:"choice",q:"¿Qué es la colaboración en Scratch?",o:["Trabajar en un mismo proyecto entre varias personas","Publicar un proyecto","Guardarlo","Compartirlo en redes"],a:0,e:"Con estudios y remezclas."},
+{t:"choice",q:"¿Qué es un proyecto accesible en Scratch?",o:["Un proyecto que puede usar cualquier persona, incluidas las que tienen dificultades visuales o auditivas","Un proyecto corto","Un proyecto sin imágenes","Un proyecto en inglés"],a:0,e:"Contrastes fuertes, textos grandes, sonidos claros."},
+{t:"order",boss:true,q:"RETO JEFE: ordena el proceso de un proyecto en Scratch.",items:["Abrir Scratch y elegir escenario","Agregar y ubicar los sprites","Programar eventos, movimientos, apariencia y sonido","Probar con la bandera verde","Corregir errores y guardar"],e:"Diseñar, programar, probar, corregir y guardar."}
+]}]},
+g7:{name:"Código, diseño e IA",sub:"Grado 7° · Programación intermedia, presentaciones e IA",units:[
+{ico:"🧩",name:"Programación Visual Intermedia",desc:"Ciclos, condicionales, variables y proyectos colaborativos.",qs:[
+{t:"choice",q:"¿Qué es un ciclo?",o:["Una estructura que repite instrucciones","Una variable","Un evento","Un sprite"],a:0,e:"'Repetir 10' o 'por siempre'."},
+{t:"choice",q:"¿Qué es un condicional?",o:["Estructura que ejecuta algo si se cumple una condición","Un sprite","Una variable","Un sonido"],a:0,e:"'Si toca el borde, rebota'."},
+{t:"order",q:"Ordena cómo funciona un condicional.",items:["Se evalúa la condición","Si es verdadera, se ejecuta","Si es falsa, se ignora o se ejecuta 'sino'","El programa continúa"],e:"Base de la lógica."},
+{t:"choice",q:"¿Qué es una variable?",o:["Un espacio con nombre donde se guarda un valor que puede cambiar","Un ciclo","Un disfraz","Un evento"],a:0,e:"Puntos, vidas, tiempo."},
+{t:"choice",q:"¿Cuándo usarías 'por siempre'?",o:["Cuando la acción se repite sin límite","Cuando cuentas hasta 10","Cuando el código es corto","Cuando no hay evento"],a:0,e:"Animaciones continuas."},
+{t:"binary",q:"¿Cuál usarías para que salte SOLO si presiona espacio?",o:["Condicional","Ciclo por siempre"],a:0,e:"Evalúa el evento y decide."},
+{t:"choice",q:"¿Cómo se crea una variable?",o:["Desde la paleta 'Variables'","Arrastrando un sprite","Cambiando el escenario","Poniendo un sonido"],a:0,e:"Se crea una vez y se usa."},
+{t:"choice",q:"¿Qué hace 'cambiar [puntos] por 1'?",o:["Suma 1 al valor actual","Fija puntos en 1","Borra la variable","Muestra el valor"],a:0,e:"'Cambiar' incrementa; 'fijar' asigna."},
+{t:"choice",q:"¿Qué es un operador lógico?",o:["Un conector que combina condiciones: Y, O, NO","Una variable","Un sprite","Un sonido"],a:0,e:"Combina condiciones."},
+{t:"binary",q:"¿Los condicionales se pueden anidar?",o:["SÍ","NO"],a:0,e:"Decisiones complejas paso a paso."},
+{t:"order",q:"Ordena cómo depurar un ciclo infinito.",items:["Detener el programa","Identificar el ciclo 'por siempre'","Agregar una condición de salida","Probar de nuevo"],e:"Ciclos sin parada son error clásico."},
+{t:"choice",q:"¿Qué es un contador?",o:["Una variable que se incrementa o decrementa","Un sonido","Un disfraz","Un evento"],a:0,e:"Vidas, puntos, tiempo."},
+{t:"binary",q:"¿Local y global son iguales?",o:["SÍ","NO"],a:1,e:"La local es de un sprite; la global de todo."},
+{t:"binary",q:"¿'Si entonces' y 'Si entonces sino' son lo mismo?",o:["SÍ","NO"],a:1,e:"El segundo añade qué hacer si NO se cumple."},
+{t:"choice",q:"¿Qué es un bloque personalizado?",o:["Un bloque que tú creas para reutilizar código","Un bloque del sistema","Una variable","Un evento"],a:0,e:"Evita repetir secuencias."},
+{t:"choice",q:"¿Qué es un algoritmo?",o:["Una secuencia ordenada de pasos para resolver un problema","Una variable","Un sprite","Un sonido"],a:0,e:"Existe antes de programar."},
+{t:"choice",q:"¿Qué es la recursión?",o:["Cuando una función se llama a sí misma","Repetir un bloque","Un error","Una variable"],a:0,e:"Útil para subproblemas iguales."},
+{t:"choice",q:"¿Cómo se comunican los sprites?",o:["Con mensajes","Con variables locales","Con disfraces","No se pueden comunicar"],a:0,e:"Forma ordenada."},
+{t:"binary",q:"¿Un programa puede tener varios eventos a la vez?",o:["SÍ","NO"],a:0,e:"Bandera, tecla, clic, mensajes."},
+{t:"order",q:"Ordena cómo diseñar un juego con puntaje.",items:["Crear la variable puntos","Fijar puntos en 0","Detectar cuándo se gana","Cambiar la variable +1","Mostrar la variable"],e:"El puntaje es el corazón de un juego."},
+{t:"choice",q:"¿Qué es una lista?",o:["Una variable que guarda varios valores a la vez","Un sonido","Un sprite","Un escenario"],a:0,e:"Nombres, puntajes, respuestas."},
+{t:"choice",q:"¿Qué es un error lógico?",o:["Cuando el programa corre pero hace algo distinto","Cuando no abre","Cuando se apaga","Cuando falta internet"],a:0,e:"El más difícil de encontrar."},
+{t:"binary",q:"¿Los bloques personalizados pueden llevar parámetros?",o:["SÍ","NO"],a:0,e:"Les pasas valores."},
+{t:"multi",q:"Selecciona TODAS las estructuras de control de Scratch.",o:["Repetir 10","Por siempre","Si entonces","Variable","Sprite"],a:[0,1,2],e:"Ciclos y condicionales son estructuras de control."},
+{t:"choice",q:"¿Qué es la depuración paso a paso?",o:["Ejecutar el programa bloque por bloque","Borrar todo","Reiniciar","Publicar"],a:0,e:"Paso a paso o slow motion."},
+{t:"choice",q:"¿Cómo se comparte un proyecto en Scratch?",o:["Con el botón 'Compartir' online","Con el botón guardar","Copiando el archivo","No se puede"],a:0,e:"Necesitas cuenta."},
+{t:"choice",q:"¿Qué es la eficiencia del código?",o:["Lograr el resultado con menos bloques y mejor orden","Escribir mucho","Solo variables","Proyecto largo"],a:0,e:"Código limpio = fácil de corregir."},
+{t:"binary",q:"¿Se pueden hacer juegos con puntaje en Scratch?",o:["SÍ","NO"],a:0,e:"Con variables y condicionales."},
+{t:"choice",q:"¿Qué es la modularidad?",o:["Dividir el programa en partes pequeñas y reutilizables","Todo en un bloque","No usar variables","Sin plan"],a:0,e:"Cada bloque personalizado es un módulo."},
+{t:"choice",q:"¿Qué es una estructura de datos?",o:["Una forma organizada de guardar y acceder a información","Un bloque de control","Un sprite","Un escenario"],a:0,e:"Listas, pilas, colas, matrices."},
+{t:"choice",q:"¿Qué es una matriz (array 2D)?",o:["Una estructura de datos con filas y columnas","Una variable simple","Un tipo de sonido","Un sprite"],a:0,e:"Útil para tableros, laberintos, mapas."},
+{t:"binary",q:"¿Un evento personalizado puede llamarse desde varios sprites?",o:["SÍ","NO"],a:0,e:"Un mensaje puede ser enviado y recibido por varios."},
+{t:"choice",q:"¿Qué es un temporizador en programación?",o:["Un mecanismo que ejecuta una acción tras cierto tiempo","Un cronómetro","Un tipo de variable","Una lista"],a:0,e:"Sirve para dar ritmo o crear retardos."},
+{t:"choice",q:"¿Qué es un 'patrón de diseño' en programación?",o:["Una solución probada y repetible para un problema común","Un tipo de variable","Un error frecuente","Un bloque personalizado"],a:0,e:"No son código, son ideas reutilizables."},
+{t:"binary",q:"¿La recursión puede usarse para recorrer estructuras como árboles?",o:["SÍ","NO"],a:0,e:"Es la forma natural de recorrer árboles."},
+{t:"choice",q:"¿Qué es 'depurar paso a paso'?",o:["Ejecutar el programa lentamente para ver qué hace en cada momento","Borrarlo","Reiniciar","Publicarlo"],a:0,e:"Como ver una película en cámara lenta."},
+{t:"choice",q:"¿Qué es una 'función de orden superior'?",o:["Una función que recibe o devuelve otra función","Una función muy larga","Una función sin parámetros","Una función con error"],a:0,e:"map, filter, reduce."},
+{t:"binary",q:"¿Un programa puede ejecutar varias acciones al mismo tiempo (paralelismo)?",o:["SÍ","NO"],a:0,e:"Varios sprites pueden correr a la vez."},
+{t:"choice",q:"¿Qué es un 'algoritmo de búsqueda'?",o:["Un método sistemático para encontrar un valor en una estructura","Un tipo de bucle","Una variable","Un sonido"],a:0,e:"Lineal, binaria, en profundidad."},
+{t:"choice",q:"¿Qué es un parámetro en una función?",o:["Un valor que se le pasa a la función para que trabaje con él","Una variable global","Un tipo de sprite","Un sonido"],a:0,e:"Permiten reutilizar una misma función para casos distintos."},
+{t:"choice",q:"¿Qué es un bucle anidado?",o:["Un ciclo dentro de otro ciclo","Un ciclo roto","Un error","Un tipo de variable"],a:0,e:"Para recorrer matrices o generar patrones."},
+{t:"binary",q:"¿Una función puede llamar a otra función?",o:["SÍ","NO"],a:0,e:"Así se construyen programas complejos a partir de piezas simples."},
+{t:"choice",q:"¿Qué es el 'alcance' de una variable?",o:["La parte del programa donde esa variable existe y puede usarse","El tamaño de la variable","El tipo de dato","El color del bloque"],a:0,e:"Local vs global."},
+{t:"choice",q:"¿Qué es un 'evento' en programación?",o:["Algo que ocurre y dispara una acción en el programa","Una variable","Un ciclo","Un tipo de dato"],a:0,e:"Clic, tecla, mensaje, señal del sensor."},
+{t:"choice",q:"¿Qué es depurar un programa?",o:["Buscar y corregir errores para que funcione bien","Acelerarlo","Borrarlo","Publicarlo"],a:0,e:"Una de las habilidades más importantes."},
+{t:"binary",q:"¿Un error de sintaxis impide que el programa corra?",o:["SÍ","NO"],a:0,e:"Un bloque mal conectado detiene la ejecución."},
+{t:"choice",q:"¿Qué es un 'test' o prueba en programación?",o:["Verificar que el programa haga lo esperado con distintos casos","Un examen escolar","Un tipo de código","Un botón"],a:0,e:"Sirve para descubrir errores antes que los usuarios."},
+{t:"choice",q:"¿Qué es un bucle 'mientras' (while)?",o:["Un ciclo que se repite mientras la condición sea verdadera","Un ciclo infinito","Una variable","Un evento"],a:0,e:"La condición se evalúa antes de cada vuelta."},
+{t:"choice",q:"¿Qué es refactorizar el código?",o:["Mejorarlo sin cambiar lo que hace: más claro, más corto","Borrarlo","Añadir funciones","Publicarlo"],a:0,e:"Código limpio se entiende, se corrige y se amplía mejor."},
+{t:"order",boss:true,q:"RETO JEFE: ordena el diseño de un proyecto interactivo.",items:["Definir la idea y las reglas","Diseñar los sprites y escenarios","Programar eventos y ciclos","Agregar condicionales y variables","Probar, ajustar y presentar"],e:"Antes de programar, piensa."}
+]},
+{ico:"🖼️",name:"Presentaciones Digitales",desc:"PowerPoint, Canva, transiciones y diseño publicitario.",qs:[
+{t:"choice",q:"¿Para qué sirve PowerPoint?",o:["Para crear presentaciones con texto, imágenes y multimedia","Para editar videos","Para programar","Para navegar"],a:0,e:"Estándar para presentar ideas."},
+{t:"choice",q:"¿Qué es una diapositiva?",o:["Cada 'página' de una presentación","El ícono","El título","Una fuente"],a:0,e:"Una idea por diapositiva."},
+{t:"order",q:"Ordena los pasos para crear una presentación.",items:["Elegir plantilla o tema","Crear las diapositivas","Agregar texto, imágenes y multimedia","Aplicar transiciones y animaciones","Revisar y presentar"],e:"El diseño no reemplaza la idea."},
+{t:"choice",q:"¿Qué es una transición?",o:["El efecto entre diapositivas","Una fuente","Una imagen","Un botón"],a:0,e:"Con moderación."},
+{t:"choice",q:"¿Qué es una plantilla?",o:["Un diseño prediseñado con colores y fuentes","Una letra","Un audio","Un menú"],a:0,e:"Coherencia visual."},
+{t:"choice",q:"¿Qué es Canva?",o:["Herramienta en línea para diseñar piezas gráficas","Un procesador","Un navegador","Un sistema"],a:0,e:"Ideal para publicidad."},
+{t:"choice",q:"¿Regla básica de diseño?",o:["Una idea por diapositiva y poco texto","Muchas fuentes","Todo animado","Todo mayúsculas"],a:0,e:"Menos es más."},
+{t:"binary",q:"¿Buena práctica al presentar?",o:["Mirar al público y explicar","Leer palabra por palabra"],a:0,e:"Tú comunicas."},
+{t:"choice",q:"¿Qué es la regla 10-20-30?",o:["10 diapositivas, 20 minutos, 30 puntos","10 colores, 20 imágenes, 30 animaciones","10 personas, 20 sillas, 30 mesas","No existe"],a:0,e:"Ágil."},
+{t:"binary",q:"¿Todas las diapositivas con misma transición?",o:["SÍ","NO"],a:1,e:"Varía según el momento."},
+{t:"choice",q:"¿Qué es el patrón de diapositivas?",o:["La plantilla maestra que define el estilo","Una fuente","Un efecto","Un audio"],a:0,e:"Cambia todo de una vez."},
+{t:"order",q:"Ordena los pasos para exportar a PDF.",items:["Abrir la presentación","Clic en Archivo","Elegir Exportar o Guardar como","Seleccionar PDF","Elegir ubicación y guardar"],e:"Conserva el diseño."},
+{t:"choice",q:"¿Qué es la accesibilidad?",o:["Diseñar para que todas las personas entiendan","Un solo color","Todo mayúsculas","Sin imágenes"],a:0,e:"Contraste, letra grande, texto alt."},
+{t:"binary",q:"¿Más animaciones = mejor presentación?",o:["SÍ","NO"],a:1,e:"Saturan y distraen."},
+{t:"choice",q:"¿Cómo se inserta un video?",o:["Desde Insertar > Video","Escribiendo 'video'","No se puede","Con Ctrl+V"],a:0,e:"Local o YouTube."},
+{t:"choice",q:"¿Qué son las notas del orador?",o:["Texto que ves tú y no el público","Un tipo de diapositiva","Un adjunto","Un efecto"],a:0,e:"Ayudan a no memorizar."},
+{t:"choice",q:"¿Qué hace Ctrl+M?",o:["Crea una nueva diapositiva","Elimina","Guarda","Cierra"],a:0,e:"Atajo más usado."},
+{t:"choice",q:"¿Qué es SmartArt?",o:["Herramienta para crear gráficos y diagramas","Una fuente","Un efecto","Un color"],a:0,e:"Procesos, jerarquías."},
+{t:"binary",q:"¿Se puede grabar narración?",o:["SÍ","NO"],a:0,e:"Convierte en video con tu voz."},
+{t:"choice",q:"¿Qué es la vista del moderador?",o:["Muestra diapositiva actual, siguiente y notas","Un tipo de diapositiva","Un adjunto","Un efecto"],a:0,e:"Útil en vivo."},
+{t:"order",q:"Ordena cómo crear una infografía en Canva.",items:["Elegir una plantilla","Reemplazar los textos","Ajustar colores e íconos","Agregar imágenes o gráficos","Descargar en PNG o PDF"],e:"Canva permite piezas profesionales."},
+{t:"choice",q:"¿Qué es la jerarquía visual?",o:["El orden en que el ojo lee los elementos","Una fuente","Un color","Una transición"],a:0,e:"Título grande, subtítulo medio, cuerpo pequeño."},
+{t:"binary",q:"¿Tabla de contenido automática?",o:["SÍ","NO"],a:0,e:"Si marcas títulos con estilos."},
+{t:"multi",q:"Selecciona TODOS los elementos multimedia de PowerPoint.",o:["Imagen","Video","Audio","Animación","Texto plano"],a:[0,1,2,3],e:"Imagen, video, audio y animación son multimedia."},
+{t:"choice",q:"¿Qué es el diseño responsivo?",o:["Adaptar el diseño a distintos tamaños de pantalla","Un color","Una animación","Una fuente"],a:0,e:"Clave en tablets o celulares."},
+{t:"choice",q:"¿Qué hace la vista previa?",o:["Muestra cómo se verá la presentación","Cambia de color","Borra","Inserta audio"],a:0,e:"Revisa antes de presentar."},
+{t:"choice",q:"¿Qué es la coherencia visual?",o:["Mismos colores, fuentes y estilos","Muchas fuentes","Cambiar de estilo cada vez","Sin colores"],a:0,e:"Profesionalismo."},
+{t:"binary",q:"¿Se puede presentar sin internet?",o:["SÍ","NO"],a:0,e:"Si los recursos son locales."},
+{t:"choice",q:"¿Qué es una presentación ejecutiva?",o:["Breve, clara y visual para directivos","Muy larga","Sin imágenes","Solo texto"],a:0,e:"Directo al punto."},
+{t:"choice",q:"¿Qué es un botón de acción en PowerPoint?",o:["Un botón que lleva a otra diapositiva, página o documento","Un botón de encendido","Un tipo de letra","Un gráfico"],a:0,e:"Presentaciones interactivas."},
+{t:"choice",q:"¿Qué es la regla 6×6?",o:["Máximo 6 palabras por línea y 6 líneas por diapositiva","6 colores por diapositiva","6 imágenes por diapositiva","6 animaciones por diapositiva"],a:0,e:"Evita la saturación de texto."},
+{t:"binary",q:"¿Conviene leer textualmente las diapositivas al presentar?",o:["SÍ","NO"],a:1,e:"La diapositiva apoya; el presentador explica."},
+{t:"choice",q:"¿Qué es el storytelling en presentaciones?",o:["Contar una historia con inicio, conflicto y resolución","Leer el texto","Mostrar muchas imágenes","Usar música"],a:0,e:"Conecta emocionalmente."},
+{t:"choice",q:"¿Qué es una 'presentación TED'?",o:["Una charla breve, potente y bien estructurada de 18 minutos","Una presentación de oficina","Un tipo de diapositiva","Un software"],a:0,e:"Una idea fuerte, contada bien."},
+{t:"binary",q:"¿Se pueden insertar hipervínculos internos entre diapositivas?",o:["SÍ","NO"],a:0,e:"Menús interactivos que llevan a otras diapositivas."},
+{t:"choice",q:"¿Qué es el 'test de las 3 palabras'?",o:["Verificar si el público recuerda las 3 ideas principales","Escribir 3 palabras por diapositiva","Usar solo 3 colores","Hacer 3 preguntas"],a:0,e:"Evalúa si el mensaje quedó claro."},
+{t:"choice",q:"¿Qué es la coherencia cromática?",o:["Usar una paleta de colores consistente en todas las diapositivas","Usar un color por diapositiva","Usar solo blanco","Usar el arcoíris"],a:0,e:"2 o 3 colores bien elegidos."},
+{t:"binary",q:"¿Se puede grabar la voz del presentador en las diapositivas?",o:["SÍ","NO"],a:0,e:"La presentación se puede ver sin el presentador."},
+{t:"choice",q:"¿Qué es 'evaluar con un ensayo previo'?",o:["Presentar la charla antes a alguien de confianza","Leer el texto","Guardar el archivo","Borrarlo"],a:0,e:"Mejor forma de detectar fallas."},
+{t:"choice",q:"¿Qué es una animación en PowerPoint?",o:["Un efecto que se aplica a elementos dentro de una diapositiva","Un cambio entre diapositivas","Un tipo de letra","Una imagen"],a:0,e:"Animación ≠ transición."},
+{t:"choice",q:"¿Qué es una sección en PowerPoint?",o:["Un agrupamiento de diapositivas relacionadas","Un tipo de letra","Un color","Un audio"],a:0,e:"Ayuda a navegar presentaciones largas."},
+{t:"binary",q:"¿Se pueden insertar gráficos de Excel en PowerPoint?",o:["SÍ","NO"],a:0,e:"Insertar > Gráfico."},
+{t:"choice",q:"¿Qué es la vista esquema?",o:["Una vista que muestra solo los títulos y el texto, sin diseño","Una vista 3D","Una vista de impresión","Una presentación final"],a:0,e:"Útil para estructurar el contenido."},
+{t:"binary",q:"¿Se puede personalizar el tema de una presentación?",o:["SÍ","NO"],a:0,e:"Vista > Patrón de diapositivas."},
+{t:"choice",q:"¿Para qué sirve la vista 'presentación con diapositivas'?",o:["Para mostrar la presentación a pantalla completa","Para editar","Para imprimir","Para exportar"],a:0,e:"Se activa con F5."},
+{t:"choice",q:"¿Qué es un SmartArt de proceso?",o:["Un diagrama que muestra pasos secuenciales","Una tabla de datos","Un gráfico circular","Una imagen"],a:0,e:"Lista, proceso, jerarquía, ciclo, relación."},
+{t:"binary",q:"¿Se puede exportar una presentación como video?",o:["SÍ","NO"],a:0,e:"Archivo > Exportar > Crear un video."},
+{t:"choice",q:"¿Qué es la 'vista previa' de una transición?",o:["Una demostración de cómo se verá el efecto","Un tipo de diapositiva","Un audio","Una imagen"],a:0,e:"Revisa siempre antes de decidir."},
+{t:"choice",q:"¿Qué es un patrón de diapositivas?",o:["Una plantilla maestra que define el estilo de todas","Una diapositiva especial","Un tipo de fuente","Una transición"],a:0,e:"Cambiar el patrón actualiza todo."},
+{t:"order",boss:true,q:"RETO JEFE: ordena el proceso de una presentación publicitaria.",items:["Definir el público objetivo","Diseñar el mensaje central","Elegir plantilla y colores","Montar diapositivas con imágenes y datos","Ensayar y ajustar"],e:"Conocer al público es el primer paso."}
+]},
+{ico:"🤖",name:"Introducción a la IA",desc:"Concepto, tipos, IA cotidiana y uso ético.",qs:[
+{t:"binary",q:"¿El filtro de rostros es IA?",o:["ES IA","NO ES IA"],a:0,e:"Visión por computador."},
+{t:"binary",q:"¿Una calculadora simple es IA?",o:["ES IA","NO ES IA"],a:1,e:"Reglas fijas."},
+{t:"binary",q:"¿El asistente de voz es IA?",o:["ES IA","NO ES IA"],a:0,e:"NLP."},
+{t:"binary",q:"¿Un reloj de pared es IA?",o:["ES IA","NO ES IA"],a:1,e:"No aprende."},
+{t:"choice",q:"¿Qué es la IA?",o:["Sistemas que realizan tareas que requieren aprendizaje y razonamiento humano","Computadoras rápidas","Robots humanos","Programas que calculan"],a:0,e:"Imita capacidades humanas."},
+{t:"order",q:"Ordena cómo aprende una IA.",items:["Recolectar datos","Entrenar con ejemplos","Encontrar patrones","Hacer predicciones"],e:"Sin datos no hay aprendizaje."},
+{t:"dilema",q:"Un estudiante hizo un deepfake de un compañero 'por diversión'.",o:["Compartirlo porque es gracioso","Pedir que lo elimine y avisar a un adulto","Hacer uno igual","Ignorarlo"],a:1,e:"Daña la dignidad.",n:"DEBATE: ¿humor o daño?"},
+{t:"dilema",q:"Un chatbot te hace la tarea y la entregas como propia.",o:["Está bien","Está mal: sirve para entender, no copiar","Está bien si nadie ve","No se puede usar nunca"],a:1,e:"Sirve para aprender.",n:"DEBATE: ¿cómo se vería la escuela si todos entregaran tareas hechas por IA?"},
+{t:"choice",q:"¿Qué es una red neuronal?",o:["Un sistema de IA inspirado en el cerebro","Un cable","Un computador","Un software"],a:0,e:"Capas de 'neuronas' matemáticas."},
+{t:"binary",q:"¿La IA tiene conciencia humana?",o:["SÍ","NO"],a:1,e:"No: procesa patrones, no siente."},
+{t:"order",q:"Ordena las etapas de entrenamiento de un modelo.",items:["Recolectar datos etiquetados","Dividir datos en entrenamiento y prueba","Entrenar el modelo","Evaluar con casos nuevos","Ajustar y desplegar"],e:"Iterar hasta generalizar."},
+{t:"choice",q:"¿Qué es una 'alucinación' de la IA?",o:["Información falsa con apariencia de verdad","Se apaga","Sin internet","Se reinicia"],a:0,e:"Verificar es tu responsabilidad."},
+{t:"choice",q:"¿Qué es machine learning?",o:["Rama de la IA donde la máquina aprende de datos sin ser programada regla por regla","Un robot que estudia","Un curso","Una memoria USB"],a:0,e:"Se le dan ejemplos."},
+{t:"binary",q:"¿La IA es 100% confiable?",o:["SÍ","NO"],a:1,e:"Depende de sus datos."},
+{t:"choice",q:"¿Cómo proteger tus datos al usar IA?",o:["No compartas nombre completo, dirección ni contraseñas","Dá todos los datos","Publícalos","No importa"],a:0,e:"Tus datos son tuyos."},
+{t:"choice",q:"¿Qué es el procesamiento de lenguaje natural?",o:["La rama de la IA que permite entender y generar lenguaje humano","Un corrector","Un traductor","Un teclado"],a:0,e:"ChatGPT, Siri, Alexa."},
+{t:"choice",q:"¿Qué es la visión por computador?",o:["La rama que permite 'ver' e interpretar imágenes","Una cámara","Un editor","Un microscopio"],a:0,e:"Facial, médico, autos autónomos."},
+{t:"choice",q:"¿Qué es un prompt?",o:["La instrucción que le das a una IA generativa","Un archivo","Un error","Una red"],a:0,e:"Contexto, formato, objetivo."},
+{t:"order",q:"Ordena cómo escribir un buen prompt.",items:["Indicar el rol o contexto","Describir la tarea","Dar el formato esperado","Añadir ejemplos","Revisar y ajustar"],e:"Los detalles mejoran la respuesta."},
+{t:"choice",q:"¿Qué es el sesgo algorítmico?",o:["Cuando una IA toma decisiones injustas por datos sesgados","Un error de programación","Una red","Una falla eléctrica"],a:0,e:"Detectarlo es responsabilidad humana."},
+{t:"binary",q:"¿La IA puede ser creativa?",o:["SÍ","NO"],a:0,e:"Genera combinaciones nuevas."},
+{t:"choice",q:"¿Qué es la IA generativa?",o:["IA que crea contenido nuevo: texto, imagen, audio o video","Solo clasifica","Repara","Traduce"],a:0,e:"ChatGPT, DALL-E, Midjourney."},
+{t:"choice",q:"¿Qué es un chatbot?",o:["Un programa que simula conversación","Un robot físico","Un navegador","Una marca"],a:0,e:"De reglas o generativo."},
+{t:"multi",q:"Selecciona TODOS los ejemplos de IA en la vida cotidiana.",o:["Reconocimiento facial","Recomendaciones de videos","Asistentes de voz","GPS que predice el tráfico","Calculadora básica"],a:[0,1,2,3],e:"Las primeras cuatro aprenden y predicen."},
+{t:"choice",q:"¿Qué es un modelo de lenguaje?",o:["Un sistema entrenado con grandes cantidades de texto para predecir y generar lenguaje","Un traductor","Un teclado","Un programa de oficina"],a:0,e:"GPT, Gemini, Claude, Llama."},
+{t:"choice",q:"¿Cómo se entrena un chatbot?",o:["Con grandes volúmenes de conversaciones y textos","Con reglas a mano","Con hojas de cálculo","Con fotos"],a:0,e:"Aprende patrones."},
+{t:"binary",q:"¿Todas las IA usan internet?",o:["SÍ","NO"],a:1,e:"Muchas funcionan sin conexión."},
+{t:"choice",q:"¿Qué es el aprendizaje supervisado?",o:["Cuando se entrena con datos etiquetados","Aprende sola sin ayuda","Programas reglas","Sin datos"],a:0,e:"El más común."},
+{t:"choice",q:"¿Qué es un dataset?",o:["Un conjunto de datos organizados para entrenar o analizar","Una base de datos antigua","Un tipo de computador","Un programa"],a:0,e:"La calidad del dataset determina la calidad del modelo."},
+{t:"choice",q:"¿Qué es un modelo de IA?",o:["El resultado del entrenamiento: un sistema que puede hacer predicciones","Un prototipo físico","Un programa instalado","Un tipo de robot"],a:0,e:"El 'cerebro entrenado'."},
+{t:"binary",q:"¿El aprendizaje no supervisado usa datos etiquetados?",o:["SÍ","NO"],a:1,e:"Busca patrones en datos SIN etiquetas."},
+{t:"choice",q:"¿Qué es el aprendizaje reforzado?",o:["Un tipo de aprendizaje donde un agente aprende por recompensas y castigos","Aprender de memoria","Un tipo de examen","Una red social"],a:0,e:"Así aprenden las IA que juegan ajedrez."},
+{t:"binary",q:"¿El test de Turing mide si una IA 'parece' humana?",o:["SÍ","NO"],a:0,e:"Si un humano no distingue si habla con persona o máquina."},
+{t:"choice",q:"¿Qué es un transformer?",o:["Una arquitectura de IA que procesa texto entendiendo el contexto","Un tipo de computador","Un programa de oficina","Un robot"],a:0,e:"Base de GPT, Claude, Gemini."},
+{t:"choice",q:"¿Qué es un LLM?",o:["Un modelo grande de lenguaje entrenado con enormes cantidades de texto","Un tipo de robot","Un programa de oficina","Una red social"],a:0,e:"Large Language Model."},
+{t:"choice",q:"¿Qué es GPT?",o:["Un modelo de lenguaje generativo preentrenado","Una marca de computador","Un programa de oficina","Un tipo de robot"],a:0,e:"Generative Pre-trained Transformer."},
+{t:"binary",q:"¿Un chatbot puede dar información errónea con total seguridad?",o:["SÍ","NO"],a:0,e:"Sí, es lo que llamamos 'alucinación'."},
+{t:"choice",q:"¿Qué es una red convolucional (CNN)?",o:["Una red neuronal especializada en procesar imágenes","Una red social","Un tipo de cable","Un programa de diseño"],a:0,e:"Base del reconocimiento facial."},
+{t:"choice",q:"¿Cómo está transformando la IA el mundo del trabajo?",o:["Automatizando tareas repetitivas y creando nuevas profesiones","Eliminando todo el trabajo humano","Reparando computadores","Haciendo café"],a:0,e:"Los trabajos cambian."},
+{t:"binary",q:"¿La IA puede reemplazar completamente al médico o al profesor?",o:["SÍ","NO"],a:1,e:"Las decisiones que afectan a personas requieren juicio humano."},
+{t:"choice",q:"¿Qué es la regulación de la IA?",o:["El conjunto de normas para que la IA se use de forma segura y justa","Un tipo de algoritmo","Un programa de oficina","Un robot"],a:0,e:"Privacidad, transparencia, no discriminación."},
+{t:"choice",q:"¿Cómo se usa la IA en salud?",o:["Para analizar imágenes médicas y asistir diagnósticos","Para hacer cirugías sin médicos","Para reemplazar hospitales","Para vender medicamentos"],a:0,e:"Apoya al médico, no lo reemplaza."},
+{t:"binary",q:"¿La IA puede tener sesgos raciales o de género?",o:["SÍ","NO"],a:0,e:"Si los datos tienen sesgos, la IA los reproduce."},
+{t:"choice",q:"¿Cómo puede la IA ayudar en educación?",o:["Personalizando el aprendizaje y dando retroalimentación inmediata","Reemplazando a los profesores","Cerrando escuelas","Haciendo exámenes"],a:0,e:"Apoya, no sustituye."},
+{t:"choice",q:"¿Cómo afecta la IA al medio ambiente?",o:["El entrenamiento de grandes modelos consume mucha energía y agua","La IA no tiene impacto ambiental","Limpia el aire","Produce alimentos"],a:0,e:"Los centros de datos consumen mucha electricidad."},
+{t:"binary",q:"¿Un artista puede usar IA como herramienta creativa?",o:["SÍ","NO"],a:0,e:"La autoría y la ética son parte del debate."},
+{t:"choice",q:"¿Qué es un 'derecho digital'?",o:["Un derecho que protege a las personas en el entorno digital","Un tipo de programa","Un código de programación","Un robot"],a:0,e:"Privacidad, identidad digital, acceso a internet."},
+{t:"choice",q:"¿Qué es la 'brecha algorítmica'?",o:["La desigualdad entre quienes entienden y se benefician de la IA y quienes no","Una falla de internet","Un tipo de chip","Un programa del gobierno"],a:0,e:"Educar en IA es una forma de justicia social."},
+{t:"order",boss:true,q:"RETO JEFE: ordena las reglas del Código de Honor IA.",items:["No dar datos personales","Usarla para aprender, no para copiar","Verificar la información antes de creerla","Decir cuándo se usó la IA"],e:"Código de Honor IA de tu curso."}
+]}]},
+g8:{name:"Color, arte y personajes",sub:"Grado 8° · Artística · Lenguaje visual",units:[
+{ico:"🎨",name:"Color, composición y logotipo",desc:"Psicología del color, composición publicitaria, logotipo y vitral.",qs:[
+{t:"choice",q:"¿Cuáles son los primarios?",o:["Rojo, azul y amarillo","Verde, naranja, violeta","Blanco y negro","Solo rojo"],a:0,e:"No se obtienen mezclando."},
+{t:"choice",q:"¿Qué son los secundarios?",o:["Los que resultan de mezclar dos primarios","Los de la naturaleza","Los pasteles","Los fríos"],a:0,e:"Rojo+amarillo=naranja."},
+{t:"order",q:"Ordena cómo se forma un secundario.",items:["Elegir dos primarios","Mezclarlos","Obtener el secundario","Aplicarlo"],e:"Teoría + práctica."},
+{t:"choice",q:"¿Qué es un logotipo?",o:["Símbolo gráfico que identifica una marca","Un cartel","Una letra","Un color"],a:0,e:"Memorable, simple."},
+{t:"binary",q:"¿El rojo transmite energía?",o:["SÍ","NO"],a:0,e:"Marcas de comida lo usan."},
+{t:"choice",q:"¿Qué es un vitral?",o:["Vidrios de colores unidos con plomo","Un cuadro","Un mural","Un grabado"],a:0,e:"Color + luz."},
+{t:"choice",q:"¿Qué es la composición publicitaria?",o:["Organización de elementos visuales para comunicar","Una letra","Un color","Una marca"],a:0,e:"Imagen + texto + color + espacio."},
+{t:"binary",q:"¿Colores cálidos?",o:["Rojo, naranja, amarillo","Azul, verde, violeta"],a:0,e:"Cercanía y energía."},
+{t:"choice",q:"¿Qué es el círculo cromático?",o:["Una rueda que organiza los colores","Un instrumento","Un pincel","Una paleta"],a:0,e:"Complementarios, análogos."},
+{t:"binary",q:"¿Blanco y negro son colores?",o:["SÍ","NO"],a:0,e:"Acromáticos según contexto."},
+{t:"choice",q:"¿Qué es la saturación?",o:["La intensidad del color","El brillo del monitor","El trazo","El papel"],a:0,e:"Vivo o gris."},
+{t:"order",q:"Ordena cómo aplicar la teoría del color.",items:["Definir el mensaje o emoción","Elegir los colores base","Elegir los complementarios","Aplicarlos y revisar"],e:"Primero la emoción."},
+{t:"choice",q:"¿Qué es el contraste?",o:["La diferencia marcada entre elementos","Un color","Una técnica","Una letra"],a:0,e:"De color, tamaño, forma o tipografía."},
+{t:"binary",q:"¿Colores fríos = calma?",o:["SÍ","NO"],a:0,e:"Azul, verde, violeta."},
+{t:"choice",q:"¿Cómo influye el color en publicidad?",o:["Guía la emoción y la atención","Solo decora","No influye","Hace caro"],a:0,e:"Rojo/amarillo estimula apetito."},
+{t:"choice",q:"¿Qué son los análogos?",o:["Los que están lado a lado en el círculo","Los complementarios","Los primarios","Los neutros"],a:0,e:"Armonía."},
+{t:"choice",q:"¿Qué es el valor de un color?",o:["Qué tan claro u oscuro es","El precio","El brillo","El pincel"],a:0,e:"Alta clave=claro."},
+{t:"choice",q:"¿Qué es la armonía cromática?",o:["Combinación equilibrada de colores","Un solo color","Todo igual","Sin color"],a:0,e:"Análogos, complementarios, tríadas."},
+{t:"choice",q:"¿Logotipo vs símbolo?",o:["El logotipo es solo texto; el símbolo solo imagen","Son iguales","El símbolo es más caro","El logotipo no se usa"],a:0,e:"Juntos forman la marca."},
+{t:"order",q:"Ordena cómo diseñar una paleta de marca.",items:["Definir qué quiere transmitir","Elegir el color base","Elegir 1-2 de apoyo","Definir tonos para fondos y texto","Documentar"],e:"Menos colores = más coherencia."},
+{t:"choice",q:"¿Qué es el minimalismo?",o:["Estética que prioriza lo esencial","Mucho color","Llenar todo","Sin imágenes"],a:0,e:"Menos es más."},
+{t:"choice",q:"¿Qué es la tipografía?",o:["El arte de elegir y combinar fuentes","Una pintura","Un color","Un instrumento"],a:0,e:"Serif, sans serif, script."},
+{t:"binary",q:"¿El color afecta las emociones?",o:["SÍ","NO"],a:0,e:"Psicología del color."},
+{t:"multi",q:"Selecciona TODOS los colores fríos.",o:["Azul","Verde","Violeta","Rojo","Naranja"],a:[0,1,2],e:"Azul, verde y violeta son fríos."},
+{t:"choice",q:"¿Qué es el tono de un color?",o:["La familia cromática","El precio","El brillo","El tamaño"],a:0,e:"Tono ≠ saturación ≠ valor."},
+{t:"choice",q:"¿Qué es el matiz?",o:["Sinónimo de tono","Un tipo de pincel","Un color frío","Un papel"],a:0,e:"Se mide en grados."},
+{t:"binary",q:"¿El blanco es un color puro?",o:["SÍ","NO"],a:1,e:"En sustractiva, ausencia de pigmento."},
+{t:"choice",q:"¿Qué es una paleta de color?",o:["El conjunto de colores elegidos para un diseño","Un pincel","Un papel","Una letra"],a:0,e:"3 a 5 suele bastar."},
+{t:"choice",q:"¿Qué es un diseño monocromático?",o:["Variaciones de un solo color","Todos los colores","Sin color","Solo B/N"],a:0,e:"Elegante."},
+{t:"choice",q:"¿Qué son los colores terciarios?",o:["Los que resultan de mezclar un primario con un secundario","Los tres colores básicos","Los colores pastel","Los colores metálicos"],a:0,e:"Rojo-naranja, azul-verde, amarillo-verde."},
+{t:"binary",q:"¿La luminosidad y la saturación son lo mismo?",o:["SÍ","NO"],a:1,e:"Luminosidad = claro/oscuro; saturación = puro/grisáceo."},
+{t:"choice",q:"¿Qué es una tríada cromática?",o:["Tres colores equidistantes en el círculo cromático","Tres colores fríos","Tres colores cálidos","Tres colores primarios"],a:0,e:"Combinaciones vibrantes y equilibradas."},
+{t:"choice",q:"¿Qué es el espacio negativo?",o:["El espacio vacío alrededor de los elementos, que los hace respirar","El espacio de color negro","Un error de diseño","Un margen"],a:0,e:"Da claridad, elegancia y foco."},
+{t:"choice",q:"¿Qué es la regla de los tercios?",o:["Dividir la imagen en 3×3 y ubicar lo importante en las intersecciones","Usar solo tres colores","Dividir el trabajo en tres partes","Usar tres fuentes"],a:0,e:"Composiciones más dinámicas."},
+{t:"choice",q:"¿Qué es el punto focal?",o:["El elemento que llama primero la atención en una composición","El color más caro","El texto más largo","Un tipo de logo"],a:0,e:"Contraste, tamaño, color o ubicación."},
+{t:"choice",q:"¿Qué es el equilibrio visual?",o:["La distribución del peso visual para que nada 'pese' más de un lado","Usar el mismo color","Repetir el logotipo","No usar imágenes"],a:0,e:"Simétrico o asimétrico."},
+{t:"binary",q:"¿El ritmo visual en diseño se logra repitiendo elementos?",o:["SÍ","NO"],a:0,e:"Repetición con variación."},
+{t:"choice",q:"¿Qué es un esquema complementario?",o:["Dos colores opuestos en el círculo cromático","Dos colores análogos","Dos colores neutros","Dos tonos del mismo color"],a:0,e:"Contraste máximo."},
+{t:"choice",q:"¿Qué es la jerarquía visual?",o:["El orden en que el ojo lee los elementos: de más a menos importante","Un tipo de fuente","Un tipo de logo","Un color"],a:0,e:"Título > subtítulo > cuerpo."},
+{t:"choice",q:"¿Qué es la escala de grises?",o:["Una gama de tonos entre blanco y negro sin color","Un tipo de pintura","Un color primario","Un tipo de papel"],a:0,e:"Estudia el valor tonal."},
+{t:"choice",q:"¿Qué es la temperatura del color?",o:["La sensación cálida o fría que transmite un color","El calor físico del objeto","La intensidad del color","El brillo"],a:0,e:"Afecta la emoción del diseño."},
+{t:"binary",q:"¿El significado de los colores cambia según la cultura?",o:["SÍ","NO"],a:0,e:"El blanco es luto en Asia; el rojo es festivo en China."},
+{t:"choice",q:"¿Qué es la accesibilidad cromática?",o:["Diseñar para que las personas con daltonismo también distingan la información","Usar solo blanco y negro","No usar color","Usar colores brillantes"],a:0,e:"No basta el color: usa formas, texturas o textos."},
+{t:"choice",q:"¿Qué es el daltonismo?",o:["Una condición visual que dificulta distinguir ciertos colores","Un tipo de arte","Un tipo de letra","Un tipo de logo"],a:0,e:"El más común confunde rojo y verde."},
+{t:"choice",q:"¿Qué son las leyes de la Gestalt?",o:["Principios que explican cómo el cerebro agrupa y organiza lo que ve","Un tipo de color","Un tipo de letra","Una técnica de pintura"],a:0,e:"Cierre, proximidad, semejanza, continuidad."},
+{t:"binary",q:"¿La simetría siempre es más atractiva que la asimetría?",o:["SÍ","NO"],a:1,e:"Cada una tiene su función."},
+{t:"choice",q:"¿Qué es un contraste cromático?",o:["La diferencia marcada entre dos o más colores","Un tipo de color","Un tipo de letra","Un tipo de diseño"],a:0,e:"Tono, saturación o valor."},
+{t:"choice",q:"¿Para qué sirve trabajar por capas en diseño?",o:["Para organizar elementos y poder modificarlos sin afectar a otros","Para hacer el diseño más lento","Para usar menos colores","Para imprimir mejor"],a:0,e:"Fondos, formas, textos, detalles."},
+{t:"binary",q:"¿Una paleta de 2 colores puede ser tan efectiva como una de 5?",o:["SÍ","NO"],a:0,e:"Menos colores suelen dar más elegancia."},
+{t:"order",boss:true,q:"RETO JEFE: ordena el proceso de una pieza publicitaria.",items:["Definir el mensaje y el público","Elegir la paleta","Diseñar el logotipo y la composición","Integrar texto e imagen","Revisar la legibilidad y ajustar"],e:"Todo debe hablar el mismo idioma."}
+]},
+{ico:"🖼️",name:"Géneros y movimientos artísticos",desc:"Abstracto, Pop, Cubista y características de cada movimiento.",qs:[
+{t:"choice",q:"¿Qué es un género artístico?",o:["Categoría que agrupa obras por tema o técnica","Una pintura","Un museo","Un color"],a:0,e:"Retrato, paisaje, bodegón, histórico."},
+{t:"choice",q:"¿Qué caracteriza al abstracto?",o:["No representa objetos reales","Con realismo","Solo B/N","Copia naturaleza"],a:0,e:"Emoción y forma."},
+{t:"choice",q:"¿Qué caracteriza al Pop?",o:["Toma imágenes de la cultura popular","Solo paisajes","Sin color","Medieval"],a:0,e:"Warhol y Lichtenstein."},
+{t:"choice",q:"¿Qué caracteriza al cubismo?",o:["Fragmenta la realidad en formas geométricas","Solo retratos","Fríos","Digital"],a:0,e:"Picasso y Braque."},
+{t:"order",q:"Ordena del más antiguo al más reciente.",items:["Renacimiento","Impresionismo","Cubismo","Arte Pop"],e:"El arte es una conversación."},
+{t:"binary",q:"¿El abstracto representa tal cual?",o:["SÍ","NO"],a:1,e:"Expresa emociones."},
+{t:"choice",q:"¿Representante del cubismo?",o:["Pablo Picasso","Walt Disney","Shakespeare","Beethoven"],a:0,e:"Guernica."},
+{t:"binary",q:"¿El Pop se inspira en la cultura de masas?",o:["SÍ","NO"],a:0,e:"Publicidad, cómics, TV."},
+{t:"choice",q:"¿Qué caracteriza al surrealismo?",o:["Sueños e inconsciente","Copia al detalle","Solo paisajes","Abstracto puro"],a:0,e:"Dalí, Magritte."},
+{t:"binary",q:"¿El Renacimiento es un movimiento?",o:["SÍ","NO"],a:0,e:"Renacer clásico."},
+{t:"order",q:"Ordena del más antiguo al más contemporáneo.",items:["Renacimiento","Barroco","Impresionismo","Vanguardias siglo XX","Arte contemporáneo"],e:"Cada época trae su lenguaje."},
+{t:"choice",q:"¿Qué es el impresionismo?",o:["Captura la luz con pinceladas sueltas","Escultura","Música","Literatura"],a:0,e:"Monet, Renoir."},
+{t:"binary",q:"¿El arte digital es actual?",o:["SÍ","NO"],a:0,e:"Net.art y arte digital."},
+{t:"choice",q:"¿Quién pintó la Mona Lisa?",o:["Leonardo da Vinci","Picasso","Van Gogh","Frida Kahlo"],a:0,e:"Renacimiento."},
+{t:"choice",q:"¿Qué caracteriza al expresionismo?",o:["Exagera formas y colores para emociones intensas","Copia realidad","Sin color","Decorativo"],a:0,e:"Munch, Kirchner."},
+{t:"choice",q:"¿Qué es el dadaísmo?",o:["Rechaza la lógica y las convenciones artísticas","Pintura religiosa","Música","Escultura clásica"],a:0,e:"Duchamp."},
+{t:"choice",q:"¿Qué es el fauvismo?",o:["Colores violentos y pinceladas libres","Escultura","Literatura","Fotografía"],a:0,e:"Matisse, Derain."},
+{t:"choice",q:"¿Qué es el art nouveau?",o:["Estilo decorativo con líneas curvas","Gótica","Música","Muebles"],a:0,e:"Gaudí, Mucha."},
+{t:"choice",q:"¿Quién pintó La noche estrellada?",o:["Vincent van Gogh","Picasso","Dalí","Monet"],a:0,e:"1889."},
+{t:"binary",q:"¿El arte urbano es arte?",o:["SÍ","NO"],a:0,e:"Grafiti y muralismo."},
+{t:"order",q:"Ordena movimientos del siglo XX.",items:["Fauvismo","Cubismo","Dadaísmo","Surrealismo","Arte Pop"],e:"Se sucedieron rápido."},
+{t:"choice",q:"¿Qué es el performance?",o:["Obra donde el cuerpo y la acción son el medio","Pintura","Concierto","Teatro tradicional"],a:0,e:"El cuerpo es el lienzo."},
+{t:"choice",q:"¿Qué es el arte conceptual?",o:["La idea vale más que el objeto","Muchos colores","Tradicional","Decorativo"],a:0,e:"Importa el concepto."},
+{t:"multi",q:"Selecciona TODOS los movimientos del siglo XX.",o:["Cubismo","Surrealismo","Arte Pop","Renacimiento","Barroco"],a:[0,1,2],e:"Los tres primeros son del XX."},
+{t:"choice",q:"¿Qué es el futurismo?",o:["Movimiento que exaltaba la velocidad y la máquina","Música","Pintura religiosa","Escultura griega"],a:0,e:"Marinetti, Boccioni."},
+{t:"choice",q:"¿Qué es el hiperrealismo?",o:["Estilo que imita la realidad como fotografía","Dibujo animado","Música","Grabado"],a:0,e:"Chuck Close."},
+{t:"binary",q:"¿El Pop Art nació en EUA y Reino Unido?",o:["SÍ","NO"],a:0,e:"Años 50."},
+{t:"choice",q:"¿Qué es el arte cinético?",o:["Arte con movimiento real o aparente","Sin color","Escultura griega","Sin formas"],a:0,e:"Calder, Soto."},
+{t:"choice",q:"¿Qué es el land art?",o:["Arte hecho en y con la naturaleza","Pintura","Música","Grabado"],a:0,e:"Smithson."},
+{t:"choice",q:"¿Qué caracteriza al romanticismo?",o:["Exalta la emoción, la naturaleza y lo sublime","Solo pinta batallas","No usa color","Es arte digital"],a:0,e:"Goya, Delacroix, Turner."},
+{t:"choice",q:"¿Qué caracteriza al realismo?",o:["Representa la vida cotidiana sin idealizarla","Solo pinta dioses","Es arte abstracto","Usa solo blanco y negro"],a:0,e:"Courbet."},
+{t:"choice",q:"¿Qué caracteriza al simbolismo?",o:["Usa símbolos y metáforas para expresar ideas y emociones","Copia la realidad","Solo pinta paisajes","Es un movimiento musical"],a:0,e:"Moreau, Klimt."},
+{t:"choice",q:"¿Qué caracteriza al modernismo (art nouveau)?",o:["Líneas curvas, decoración y naturaleza estilizada","Formas geométricas puras","Copia la realidad","Arte digital"],a:0,e:"Gaudí, Mucha."},
+{t:"choice",q:"¿Qué caracteriza al op art?",o:["Ilusiones ópticas con formas geométricas","Pintura religiosa","Escultura clásica","Retratos realistas"],a:0,e:"Vasarely."},
+{t:"choice",q:"¿Qué es el minimalismo en arte?",o:["Reducir la obra a sus elementos esenciales","Añadir muchos detalles","Usar solo blanco y negro","Pintar solo retratos"],a:0,e:"Donald Judd, Dan Flavin."},
+{t:"binary",q:"¿El rococó es anterior al neoclasicismo?",o:["SÍ","NO"],a:0,e:"Rococó s. XVIII, neoclasicismo s. XVIII-XIX."},
+{t:"choice",q:"¿Qué caracteriza al neoclasicismo?",o:["Inspiración en la Antigüedad clásica: orden, razón, líneas puras","Colores brillantes sin forma","Abstracción pura","Arte digital"],a:0,e:"David, Ingres."},
+{t:"choice",q:"¿Qué es el posmodernismo?",o:["Una corriente que mezcla estilos y cuestiona los grandes relatos del arte moderno","Un movimiento del siglo XV","Un tipo de pintura religiosa","Un tipo de escultura griega"],a:0,e:"Cita, ironía, mezcla."},
+{t:"binary",q:"¿El arte urbano y el grafiti son reconocidos como formas artísticas contemporáneas?",o:["SÍ","NO"],a:0,e:"Basquiat, Banksy."},
+{t:"choice",q:"¿Qué caracteriza al arte gótico?",o:["Arquitectura con arcos apuntados, vitrales y verticalidad","Formas geométricas simples","Colores planos","Arte digital"],a:0,e:"Notre-Dame, Chartres."},
+{t:"choice",q:"¿Qué caracteriza al barroco?",o:["Dramatismo, movimiento, contrastes fuertes de luz y sombra","Líneas puras y orden","Simplicidad absoluta","Abstracción pura"],a:0,e:"Caravaggio, Bernini, Rembrandt."},
+{t:"choice",q:"¿Qué caracteriza al arte islámico?",o:["Geometría compleja, caligrafía y arabescos","Figuras humanas realistas","Paisajes naturalistas","Abstracción pura"],a:0,e:"La Alhambra."},
+{t:"choice",q:"¿Qué caracteriza al arte precolombino?",o:["Obras de las culturas americanas antes de la llegada de Colón","Pintura renacentista","Escultura griega","Arte digital"],a:0,e:"Mayas, aztecas, incas."},
+{t:"binary",q:"¿El arte africano influyó en las vanguardias europeas del siglo XX?",o:["SÍ","NO"],a:0,e:"Picasso y los cubistas."},
+{t:"choice",q:"¿Qué caracteriza al arte asiático tradicional?",o:["La caligrafía, la pintura con tinta y la búsqueda del equilibrio","Colores saturados","Realismo fotográfico","Arte digital"],a:0,e:"China, Japón, India."},
+{t:"choice",q:"¿Qué es el muralismo mexicano?",o:["Un movimiento de pintura monumental en muros, con temas sociales","Un tipo de escultura","Una danza tradicional","Un tipo de arquitectura"],a:0,e:"Rivera, Orozco, Siqueiros."},
+{t:"choice",q:"¿Qué es el arte feminista?",o:["Un movimiento que cuestiona el papel de la mujer en el arte y la sociedad","Un tipo de artesanía","Una técnica de pintura","Un movimiento musical"],a:0,e:"Nació en los años 70."},
+{t:"binary",q:"¿Existe un arte indígena contemporáneo?",o:["SÍ","NO"],a:0,e:"Técnicas ancestrales + lenguajes contemporáneos."},
+{t:"choice",q:"¿Qué es el arte latinoamericano contemporáneo?",o:["Producción artística actual de América Latina, con identidad propia","Copia del arte europeo","Arte folclórico","Arte precolombino"],a:0,e:"Identidad, memoria, política, naturaleza."},
+{t:"order",boss:true,q:"RETO JEFE: ordena la evolución del arte moderno.",items:["Realismo: copiar la realidad","Impresionismo: captar la luz","Cubismo: fragmentar la forma","Abstracción: liberar el color","Pop: mirar la cultura de masas"],e:"Reconocer el hilo histórico."}
+]},
+{ico:"🎭",name:"Historieta, caricatura y personaje",desc:"Manga, caricatura, superhéroes, esténcil y personaje fantástico.",qs:[
+{t:"choice",q:"¿Qué es un esténcil?",o:["Plantilla recortada para pintar y repetir","Un lápiz","Un dibujo digital","Un marco"],a:0,e:"Reproducción múltiple."},
+{t:"choice",q:"El manga se caracteriza por…",o:["Ojos expresivos, viñetas, onomatopeyas, globos","Solo fotografía","Acuarela","Sin texto"],a:0,e:"Lenguaje visual propio."},
+{t:"choice",q:"¿Cómo se logra una caricatura?",o:["Exagerando rasgos con humor respetuoso","Copiando foto","Solo líneas rectas","Un solo color"],a:0,e:"La exageración hace reconocible."},
+{t:"choice",q:"¿Qué identifica a un superhéroe?",o:["Su símbolo y colores","El tamaño","Las páginas","El precio"],a:0,e:"El símbolo en silueta."},
+{t:"order",q:"Ordena los pasos para crear un personaje.",items:["Boceto a lápiz","Definir rasgos, vestuario, personalidad","Aplicar color","Agregar fondo, símbolo o logo"],e:"Idea, forma, color, contexto."},
+{t:"choice",q:"Un personaje creíble necesita…",o:["Coherencia entre historia, anatomía y apariencia","Colores brillantes","Muchos poderes","Parecerse a uno famoso"],a:0,e:"Lógica interna."},
+{t:"choice",q:"¿Para qué los complementarios?",o:["Contraste y resaltar","Gastar menos","Dibujar rápido","Todo igual"],a:0,e:"Vibración visual."},
+{t:"choice",q:"¿Para qué las onomatopeyas?",o:["Representar sonidos y dinamismo","Firmar","Indicar precio","Rellenar"],a:0,e:"'¡PUM!'."},
+{t:"choice",q:"¿Qué es un plano?",o:["El encuadre: general, medio, primer plano, detalle","Línea horizontal","Un color","Un papel"],a:0,e:"Variar planos da ritmo."},
+{t:"binary",q:"¿Los cómics son solo para niños?",o:["SÍ","NO"],a:1,e:"Para todas las edades."},
+{t:"order",q:"Ordena los pasos para crear una historieta.",items:["Escribir el guion","Dibujar el storyboard","Hacer el arte final","Agregar onomatopeyas y color","Revisar y presentar"],e:"El storyboard ahorra tiempo."},
+{t:"choice",q:"¿Qué son los bocadillos?",o:["Espacios donde se escribe lo que dicen los personajes","Un tipo de comida","Un color","Un papel"],a:0,e:"Diálogo, pensamiento, grito."},
+{t:"choice",q:"¿Diferencia cómic/manga?",o:["El manga se lee de derecha a izquierda","El manga no tiene color","El occidental no tiene acción","Son iguales"],a:0,e:"Afecta la narrativa."},
+{t:"binary",q:"¿El color es obligatorio en un cómic?",o:["SÍ","NO"],a:1,e:"Hay cómics en B/N."},
+{t:"choice",q:"¿Qué es un storyboard?",o:["Secuencia de bocetos que muestra cómo se contará la historia","Una cámara","Una viñeta","Un guion de solo texto"],a:0,e:"Cine, animación, cómic."},
+{t:"choice",q:"¿Qué es un webcómic?",o:["Cómic publicado y leído en internet","Cómic de periódico","Manga japonés","Cómic infantil"],a:0,e:"Formato vertical."},
+{t:"choice",q:"¿Cuántas viñetas suele tener una tira cómica?",o:["3 o 4","10 o 12","1 sola","20"],a:0,e:"Brevedad."},
+{t:"choice",q:"¿Qué es la novela gráfica?",o:["Cómic extenso con estructura de libro","Historieta de 1 página","Manga corto","Novela sin imágenes"],a:0,e:"Maus, Persépolis."},
+{t:"choice",q:"¿Qué es el dibujo digital?",o:["Dibujar con tableta gráfica y software","Escanear","Con mouse","Un tipo de foto"],a:0,e:"Capas y deshacer."},
+{t:"binary",q:"¿Los cómics pueden ser educativos?",o:["SÍ","NO"],a:0,e:"Historia, ciencia, filosofía."},
+{t:"order",q:"Ordena cómo crear un cómic de una página.",items:["Elegir el tema","Escribir la historia en pocas líneas","Boceto de 4-6 viñetas","Arte final","Agregar globos, onomatopeyas y color"],e:"Con pocas viñetas se cuenta mucho."},
+{t:"choice",q:"¿Cómo se logra movimiento?",o:["Con líneas de acción, posturas y encuadres dinámicos","Con colores","Escribiendo 'movimiento'","Agrandando la viñeta"],a:0,e:"Líneas cinéticas."},
+{t:"choice",q:"¿Qué es el estilo chibi?",o:["Estilo japonés con personajes pequeños y cabezones","Caricatura política","Pintura realista","Cómic francés"],a:0,e:"Cute."},
+{t:"multi",q:"Selecciona TODOS los elementos de una historieta.",o:["Viñetas","Globos de diálogo","Onomatopeyas","Líneas cinéticas","Índice del libro"],a:[0,1,2,3],e:"Los cuatro primeros son del lenguaje del cómic."},
+{t:"choice",q:"¿Qué es un fanzine?",o:["Publicación hecha por aficionados","Revista comercial","Manga oficial","Libro de arte"],a:0,e:"Fotocopias y grapas."},
+{t:"choice",q:"¿Qué es un cómic autobiográfico?",o:["Un cómic donde el autor cuenta su vida","De superhéroes","Ficción","Manga japonés"],a:0,e:"Maus, Persépolis."},
+{t:"binary",q:"¿El manga solo se dibuja en B/N?",o:["SÍ","NO"],a:1,e:"También hay a color."},
+{t:"choice",q:"¿Qué es un cómic sin palabras?",o:["Cuenta la historia solo con imágenes","En otro idioma","Sin dibujos","Borrador"],a:0,e:"Reto narrativo puro."},
+{t:"choice",q:"¿Qué es un webtoon?",o:["Un cómic digital pensado para leerse en el celular, en scroll vertical","Un cómic impreso","Un manga japonés","Un tipo de animación"],a:0,e:"Nació en Corea del Sur."},
+{t:"choice",q:"¿Qué es un one-shot en cómic?",o:["Una historia autoconclusiva que no continúa en otras entregas","Un cómic de una página","Un manga muy corto","Un tipo de viñeta"],a:0,e:"Toda la historia en un solo número."},
+{t:"binary",q:"¿Existen cómics sin texto (solo con imágenes)?",o:["SÍ","NO"],a:0,e:"'Sin palabras' es un subgénero."},
+{t:"choice",q:"¿Qué es la tinta china?",o:["Una técnica tradicional de dibujo con tinta negra intensa","Un tipo de lápiz de color","Un programa digital","Un tipo de papel"],a:0,e:"Muy usada en manga y cómic."},
+{t:"choice",q:"¿Qué es un rotulador o marcador de tinta?",o:["Un instrumento para delinear y dar acabado a los dibujos","Un tipo de lápiz de grafito","Un programa de diseño","Un tipo de papel"],a:0,e:"Grosores: 0.1, 0.3, 0.5, 0.8, pincel."},
+{t:"choice",q:"¿Qué es un storyboard digital?",o:["Un storyboard hecho con software en vez de papel","Un tipo de viñeta","Un cómic sin dibujos","Un tipo de animación"],a:0,e:"Storyboarder, Toon Boom."},
+{t:"choice",q:"¿Qué es un cómic de autor?",o:["Un cómic donde el mismo autor hace guion y dibujo, con estilo propio","Un cómic comercial","Un cómic sin guion","Un cómic anónimo"],a:0,e:"Maus, Persépolis, Blankets."},
+{t:"binary",q:"¿El manga se dibuja tradicionalmente en blanco y negro?",o:["SÍ","NO"],a:0,e:"Por rapidez y economía de impresión."},
+{t:"choice",q:"¿Qué es un cómic autobiográfico?",o:["Un cómic donde el autor cuenta su propia vida","Un cómic de superhéroes","Un cómic de ciencia ficción","Un cómic de terror"],a:0,e:"Maus, Persépolis, Fun Home."},
+{t:"binary",q:"¿Un cómic puede ser educativo?",o:["SÍ","NO"],a:0,e:"Historia, ciencia, filosofía, matemáticas."},
+{t:"choice",q:"¿Qué es la estructura narrativa en 3 actos?",o:["Planteamiento, nudo y desenlace","Inicio y fin","Acción y diálogo","Color y forma"],a:0,e:"Base de casi toda historia."},
+{t:"choice",q:"¿Qué es el arco de un personaje?",o:["La transformación que experimenta a lo largo de la historia","Una curva de dibujo","Un tipo de viñeta","Un tipo de globo"],a:0,e:"Un buen personaje cambia."},
+{t:"choice",q:"¿Qué es el antagonista?",o:["El personaje u obstáculo que se opone al protagonista","El mejor amigo del héroe","El narrador","El escenario"],a:0,e:"Un gran antagonista tiene razones."},
+{t:"binary",q:"¿El subtexto en un diálogo es lo que se dice sin decirlo explícitamente?",o:["SÍ","NO"],a:0,e:"Lo que el personaje calla también importa."},
+{t:"choice",q:"¿Qué diferencia hay entre guion literario y guion gráfico?",o:["El literario describe con palabras; el gráfico muestra con dibujos","Son lo mismo","El gráfico es más corto","El literario no tiene diálogos"],a:0,e:"Se complementan."},
+{t:"choice",q:"¿Qué caracteriza al manga shonen?",o:["Historias de acción, amistad y superación, dirigidas a jóvenes","Historias románticas","Historias de terror","Historias históricas"],a:0,e:"Naruto, Dragon Ball, One Piece."},
+{t:"choice",q:"¿Qué caracteriza al manga shojo?",o:["Historias centradas en emociones y relaciones, dirigidas a jóvenes","Historias de guerra","Historias de terror","Historias de ciencia ficción"],a:0,e:"Sailor Moon, Fruits Basket."},
+{t:"binary",q:"¿El cómic histórico puede ser una fuente seria de conocimiento?",o:["SÍ","NO"],a:0,e:"Maus, Persépolis."},
+{t:"choice",q:"¿Qué es la ciencia ficción en el cómic?",o:["Un género que explora futuros, tecnologías y sociedades alternativas","Un género de terror","Un género romántico","Un género histórico"],a:0,e:"Reflexiona sobre el presente."},
+{t:"choice",q:"¿Qué es un cómic social?",o:["Un cómic que denuncia o reflexiona sobre problemas de la sociedad","Un cómic de superhéroes","Un cómic humorístico","Un cómic infantil"],a:0,e:"Desigualdad, migración, violencia, derechos."},
+{t:"order",boss:true,q:"RETO JEFE: ordena el proceso creativo completo.",items:["Inspiración e ideas","Boceto a lápiz","Color y acabados","Revisión y corrección","Obra final y presentación"],e:"El arte se construye con un proceso."}
+]}]}
+};
+const GUIDE=[
+{tipo:"choice",icon:"🎯",nombre:"Elige",sub:"Una sola respuesta",what:"Se te hace una pregunta y varias opciones; solo UNA es correcta.",steps:["Lee la pregunta completa dos veces.","Descarta las opciones claramente falsas.","Compara las que quedan: elige la que responda mejor.","Si dudas, pregúntate cuál se puede justificar con un argumento."],tip:"Las opciones se barajan en cada partida: no te confíes por la posición."},
+{tipo:"order",icon:"🔢",nombre:"Ordena",sub:"Secuencia lógica",what:"Se te dan varios pasos y debes hacer clic en ellos en el orden correcto.",steps:["Busca el paso inicial: casi siempre es el más obvio.","Piensa qué paso necesita que el anterior ya esté hecho.","Sigue la cadena hasta el final.","Revisa: si un paso depende del siguiente, el orden está mal."],tip:"Pregúntate: «¿este paso necesita que el anterior ya esté hecho?»."},
+{tipo:"binary",icon:"✔",nombre:"Clasifica",sub:"Sí/No · Es/No es",what:"Debes decidir entre dos opciones: SÍ/NO o ES/NO ES.",steps:["Define claramente el criterio.","Piensa en un caso extremo o contraejemplo.","Aplica el criterio sin dudar.","Confirma tu respuesta."],tip:"Las dos opciones también se barajan."},
+{tipo:"dilema",icon:"💬",nombre:"Debate",sub:"Caso ético",what:"Situación real o hipotética donde hay que decidir lo más responsable.",steps:["Identifica a quién afecta la decisión.","Piensa en las consecuencias a corto y largo plazo.","Elige la opción que respeta a todos los implicados.","Prepárate para defender tu postura con razones."],tip:"Pregúntate: «¿qué pasaría si todos hicieran lo mismo?»."},
+{tipo:"multi",icon:"✅",nombre:"Múltiple",sub:"Selecciona todas las correctas",what:"Hay varias correctas. Debes seleccionarlas TODAS y pulsar Confirmar.",steps:["Lee cada opción como si fuera Sí/No: ¿es verdadera?","Si es verdadera, selecciónala.","Si es falsa, déjala sin seleccionar.","Revisa dos veces antes de confirmar."],tip:"Las opciones se barajan; no te guíes por el orden."},
+{tipo:"boss",icon:"⚔",nombre:"Reto jefe",sub:"Cierre de unidad",what:"Es el último reto. Combina lo aprendido y suele requerir más razonamiento.",steps:["Respira: tienes más tiempo.","Aplica lo aprendido antes.","Piensa paso a paso.","Confía en lo que ya sabes."],tip:"Los jefes no son más difíciles: son más integradores."},
+{tipo:"bonus",icon:"⭐",nombre:"Ronda bonus",sub:"Puntos x2",what:"Pregunta sorpresa que vale el doble. Se marca con aro dorado.",steps:["Concéntrate: cada punto vale doble.","Aplica la lógica del tipo que sea.","No te confíes: el tiempo corre.","Aprovecha la oportunidad."],tip:"Aparece una sola vez por partida y nunca en el jefe final."},
+{tipo:"teamRotate",icon:"🔄",nombre:"Equipos · Por turnos",sub:"Rotación clásica",what:"Cada reto lo responde una escuadra distinta. Rota en orden, acierte o falle.",steps:["Escucha la pregunta con tu equipo.","Discutan brevemente.","El portavoz responde.","Pasa el turno al siguiente equipo."],tip:"Ideal para que TODOS participen por igual."},
+{tipo:"teamStreak",icon:"🔥",nombre:"Equipos · Avanza si aciertas",sub:"Modo racha",what:"El equipo que acierta MANTIENE el turno. Solo cuando falla pasa al siguiente.",steps:["Si aciertan: ganan puntos y SIGUEN jugando.","Si fallan: pierden el turno.","La racha se rompe al fallar.","El equipo con más aciertos seguidos acumula más puntos."],tip:"El modo más competitivo: premia la consistencia."},
+{tipo:"teamEquitativo",icon:"⚖️",nombre:"Equipos · Equitativo",sub:"Mismo número de retos",what:"Cada equipo responde EXACTAMENTE el mismo número de retos. El total se ajusta a múltiplo del número de equipos.",steps:["Cada equipo tiene un número fijo de retos.","Los turnos rotan estrictamente.","El marcador muestra X/N por equipo.","Al final, comparación justa."],tip:"El más justo: ideal para evaluaciones y torneos formales."},
+{tipo:"teamStations",icon:"🎬",nombre:"Equipos · Por estaciones",sub:"Uno a uno",what:"Cada equipo juega su sesión COMPLETA de forma aislada. Al terminar pasa el dispositivo al siguiente equipo.",steps:["El Equipo 1 juega todos sus retos.","Al terminar, el dispositivo se pasa al Equipo 2.","Cada equipo ve una pantalla con su puntaje parcial.","Al final, ranking general."],tip:"Ideal cuando hay un solo computador."}
+];
+
+const $=s=>document.querySelector(s);
+const S={grade:null,unit:null,mode:"solo",teamMode:"rotate",qs:[],qi:0,
+score:0,lives:3,combo:0,bestCombo:0,correct:0,
+teams:[],turn:0,lastCorrect:false,
+timeLeft:0,maxTime:25,timer:null,locked:false,sound:true,orderSel:[],multiSel:[],
+pw:{fifty:1,time:1,skip:1,x2:1},x2:false,
+fastCount:0,usedSkip:0,perfect:true,bossBeaten:false,
+bonusIndex:-1,cfgTeams:3,cfgRonda:18,
+rondaEfectiva:0,retosPorEquipo:0,
+stationQueue:[],stationIdx:0,teamQuestions:{},currentStationTeam:null};
+
+const RONDA_OPTS=[6,9,12,15,18,21,24,27,30,35,40,45,50];
+
+let actx=null;
+function tone(f,d,type="sine",v=.07){if(!S.sound)return;try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const o=actx.createOscillator(),g=actx.createGain();o.type=type;o.frequency.value=f;g.gain.value=v;o.connect(g);g.connect(actx.destination);const t=actx.currentTime;o.start(t);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.stop(t+d+.02);}catch(e){}}
+const sndOK=()=>{tone(660,.12,"triangle");setTimeout(()=>tone(880,.16,"triangle"),110);};
+const sndBad=()=>tone(200,.22,"sawtooth",.05);
+const sndTick=()=>tone(1200,.05,"square",.03);
+const sndBonus=()=>{[880,1100,1320].forEach((f,i)=>setTimeout(()=>tone(f,.14,"triangle",.09),i*90));};
+const sndStreak=()=>{[660,880,1320].forEach((f,i)=>setTimeout(()=>tone(f,.18,"triangle",.1),i*110));};
+const sndWin=()=>{[523,659,784,1047].forEach((f,i)=>setTimeout(()=>tone(f,.18,"triangle",.08),i*90));};
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function prepareQuestion(q){
+  const nq={...q};
+  if(q.t==="choice"||q.t==="binary"||q.t==="dilema"){
+    const idxs=q.o.map((_,i)=>i);shuffle(idxs);
+    nq.o=idxs.map(i=>q.o[i]);nq.a=idxs.indexOf(q.a);
+  } else if(q.t==="multi"){
+    const idxs=q.o.map((_,i)=>i);shuffle(idxs);
+    nq.o=idxs.map(i=>q.o[i]);nq.a=q.a.map(old=>idxs.indexOf(old)).sort((x,y)=>x-y);
+  }
+  return nq;
+}
+
+function show(id){["home","rules","units","setup","game","station","end"].forEach(k=>$("#"+k).classList.toggle("hidden",k!==id));window.scrollTo({top:0,behavior:"smooth"});}
+
+function renderGuide(currentType){
+  const grid=$("#guideGrid");grid.innerHTML="";
+  GUIDE.forEach(g=>{
+    const isCurrent=g.tipo===currentType;
+    const card=document.createElement("div");
+    card.className="gcard2"+(isCurrent?" current":"");
+    card.innerHTML=`<div class="g-head"><div class="g-ico">${g.icon}</div><div><h3>${g.nombre}<small>${g.sub}</small></h3></div></div><p class="g-what">${g.what}</p><ul class="g-steps">${g.steps.map((s,i)=>`<li data-n="${i+1}">${s}</li>`).join("")}</ul><div class="g-tip"><b>Consejo:</b> ${g.tip}</div>`;
+    grid.appendChild(card);
+  });
+  $("#guideOverlay").classList.remove("hidden");
+}
+function closeGuide(){$("#guideOverlay").classList.add("hidden");}
+document.querySelectorAll("#btnGuide,#btnGuide2,#btnGuide3").forEach(b=>b.addEventListener("click",()=>renderGuide(null)));
+$("#btnGuideClose").addEventListener("click",closeGuide);
+$("#guideOverlay").addEventListener("click",e=>{if(e.target.id==="guideOverlay")closeGuide();});
+$("#btnQHelp").addEventListener("click",()=>{
+  const q=currentQ();if(!q)return;
+  let t;
+  if(q.boss)t="boss";else if(isBonus())t="bonus";
+  else if(S.mode==="team"){
+    if(S.teamMode==="streak")t="teamStreak";
+    else if(S.teamMode==="equitativo")t="teamEquitativo";
+    else if(S.teamMode==="stations")t="teamStations";
+    else t="teamRotate";
+  } else t=q.t;
+  renderGuide(t);
+});
+
+function saveCfg(){const names=[...document.querySelectorAll("#teamNames input")].map(inp=>inp.value);localStorage.setItem("inet-cfg",JSON.stringify({cfgTeams:S.cfgTeams,cfgRonda:S.cfgRonda,names,teamMode:S.teamMode}));}
+function loadCfg(){try{return JSON.parse(localStorage.getItem("inet-cfg")||"null");}catch(e){return null;}}
+
+function sugerirRonda(n){
+  const t=n<=4?8:(n<=8?6:(n<=12?4:2));
+  const ideal=n*t;
+  return RONDA_OPTS.reduce((best,v)=>Math.abs(v-ideal)<Math.abs(best-ideal)?v:best,RONDA_OPTS[0]);
+}
+
+document.querySelectorAll(".gcard").forEach(b=>b.addEventListener("click",()=>openGrade(b.dataset.grade)));
+function openGrade(g){S.grade=g;const G=C[g];$("#gradeTitle").textContent=G.name;$("#gradeSub").textContent=G.sub;renderUnits();show("units");}
+function renderUnits(){
+  const G=C[S.grade];const box=$("#unitList");box.innerHTML="";
+  G.units.forEach((u,i)=>{
+    const card=document.createElement("button");card.className="ucard";
+    const modeLabel=S.mode==="team"?"👥 Crear torneo":"▶ Jugar unidad";
+    card.innerHTML=`<span class="tag">Unidad ${i+1}</span><span class="pool">${u.qs.length} retos únicos</span><div class="uico">${u.ico}</div><h3>${u.name}</h3><p>${u.desc}</p><div class="play">${modeLabel}</div>`;
+    card.addEventListener("click",()=>{if(S.mode==="team")openSetup(S.grade,i);else startUnit(S.grade,i);});
+    box.appendChild(card);
+  });
+}
+document.querySelectorAll(".mode-opt").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".mode-opt").forEach(x=>x.classList.remove("active"));
+  b.classList.add("active");S.mode=b.dataset.mode;renderUnits();
+}));
+
+function openSetup(g,idx){
+  S.grade=g;S.unit=idx;const u=C[g].units[idx];
+  $("#setupIco").textContent=u.ico;
+  $("#setupTitle").textContent="Configurar torneo";
+  $("#setupSub").textContent=`Unidad ${idx+1}: ${u.name} · ${C[g].name} · Banco: ${u.qs.length} retos únicos`;
+  const saved=loadCfg();
+  if(saved){
+    if(saved.cfgTeams&&saved.cfgTeams>=2&&saved.cfgTeams<=20)S.cfgTeams=saved.cfgTeams;
+    if(saved.teamMode)S.teamMode=saved.teamMode;
+    if(saved.cfgRonda)S.cfgRonda=saved.cfgRonda;
+  }
+  document.querySelectorAll("#teamModeRow .opt-btn").forEach(b=>b.classList.toggle("sel",b.dataset.mode===S.teamMode));
+  buildTeamCount();buildNames();
+  if(saved&&saved.names){[...document.querySelectorAll("#teamNames input")].forEach((inp,i)=>{if(saved.names[i])inp.value=saved.names[i];});}
+  buildRondaOptions(u.qs.length);updateSuggestion();show("setup");
+}
+function buildTeamCount(){
+  const box=$("#teamCount");box.innerHTML="";
+  for(let i=2;i<=20;i++){
+    const b=document.createElement("button");
+    b.className="opt-btn-num"+(i===S.cfgTeams?" sel":"");b.dataset.n=i;b.textContent=i;
+    b.addEventListener("click",()=>{
+      if(S.cfgTeams===i)return;
+      saveCfg();S.cfgTeams=i;
+      document.querySelectorAll("#teamCount .opt-btn-num").forEach(x=>x.classList.toggle("sel",parseInt(x.dataset.n,10)===i));
+      buildNames();const saved=loadCfg();
+      if(saved&&saved.names){[...document.querySelectorAll("#teamNames input")].forEach((inp,j)=>{if(saved.names[j])inp.value=saved.names[j];});}
+      if(S.grade&&S.unit!==null){const ps=C[S.grade].units[S.unit].qs.length;buildRondaOptions(ps);updateSuggestion();}
+    });
+    box.appendChild(b);
+  }
+}
+function buildNames(){
+  const box=$("#teamNames");box.innerHTML="";
+  for(let i=0;i<S.cfgTeams;i++){
+    const inp=document.createElement("input");inp.type="text";inp.value="Equipo "+(i+1);inp.maxLength=20;inp.placeholder="Nombre del equipo "+(i+1);box.appendChild(inp);
+  }
+}
+function buildRondaOptions(poolSize){
+  const box=$("#rondaCount");box.innerHTML="";
+  const minRequired=(S.teamMode==="equitativo"||S.teamMode==="stations")?S.cfgTeams:1;
+  if(S.cfgRonda<minRequired){S.cfgRonda=RONDA_OPTS.find(n=>n>=minRequired)||poolSize;if(S.cfgRonda>poolSize)S.cfgRonda=poolSize;}
+  if(S.cfgRonda>poolSize)S.cfgRonda=poolSize;
+  RONDA_OPTS.forEach(n=>{
+    const b=document.createElement("button");b.className="opt-btn";b.dataset.n=n;
+    b.innerHTML=`<span>${n} retos</span>`;
+    if(n>poolSize||n<minRequired)b.disabled=true;
+    if(n===S.cfgRonda)b.classList.add("sel");
+    b.addEventListener("click",()=>{
+      if(b.disabled)return;
+      document.querySelectorAll("#rondaCount .opt-btn").forEach(x=>x.classList.remove("sel"));
+      b.classList.add("sel");S.cfgRonda=n;updateSuggestion();saveCfg();
+    });
+    box.appendChild(b);
+  });
+}
+function updateSuggestion(){
+  const box=$("#rondaCount");const poolSize=C[S.grade].units[S.unit].qs.length;
+  const minRequired=(S.teamMode==="equitativo"||S.teamMode==="stations")?S.cfgTeams:1;
+  if(S.cfgRonda<minRequired||S.cfgRonda>poolSize){S.cfgRonda=RONDA_OPTS.find(n=>n>=minRequired&&n<=poolSize)||poolSize;}
+  const suggest=sugerirRonda(S.cfgTeams);
+  box.querySelectorAll(".opt-btn").forEach(b=>{
+    b.classList.remove("suggest");const n=parseInt(b.dataset.n,10);
+    b.classList.toggle("sel",n===S.cfgRonda);
+    if(n===suggest&&!b.disabled)b.classList.add("suggest");
+  });
+  const turnos=Math.max(1,Math.round(S.cfgRonda/S.cfgTeams));
+  $("#suggestHint").innerHTML=`Con <b>${S.cfgTeams} equipos</b> y <b>${S.cfgRonda} retos</b>, cada escuadra tendrá <b>≈${turnos} turnos</b>. Sugerimos <b>${suggest} retos</b> (★ dorada).`;
+  const fairHint=$("#fairHint");
+  if(S.teamMode==="equitativo"||S.teamMode==="stations"){
+    const rpe=Math.max(1,Math.floor(S.cfgRonda/S.cfgTeams));
+    const totalEfectivo=Math.min(rpe*S.cfgTeams,poolSize);
+    const finalRpe=Math.floor(totalEfectivo/S.cfgTeams);
+    fairHint.classList.remove("hidden");
+    const label=S.teamMode==="stations"?"🎬 Modo por estaciones":"⚖️ Modo equitativo";
+    if(finalRpe*S.cfgTeams===S.cfgRonda){
+      fairHint.innerHTML=`${label}: ${S.cfgTeams} equipos × ${finalRpe} retos = <b>${S.cfgRonda} retos totales</b>. Cada equipo responde exactamente ${finalRpe} retos.`;
+    } else {
+      fairHint.innerHTML=`${label}: el juego ajustará a <b>${finalRpe*S.cfgTeams} retos</b> (${S.cfgTeams} equipos × ${finalRpe} cada uno). Los ${S.cfgRonda-finalRpe*S.cfgTeams} restantes no se usarán para garantizar la igualdad.`;
+    }
+  } else {fairHint.classList.add("hidden");}
+}
+document.querySelectorAll("#teamModeRow .opt-btn").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll("#teamModeRow .opt-btn").forEach(x=>x.classList.remove("sel"));
+  b.classList.add("sel");S.teamMode=b.dataset.mode;saveCfg();
+  if(S.grade&&S.unit!==null){const ps=C[S.grade].units[S.unit].qs.length;buildRondaOptions(ps);updateSuggestion();}
+}));
+
+function startUnit(g,idx){
+  S.mode="solo";S.grade=g;S.unit=idx;
+  const u=C[g].units[idx];
+  const pool=shuffle(u.qs.map(x=>({...x})));
+  S.qs=pool.slice(0,Math.min(9,pool.length)).map(prepareQuestion);
+  S.qi=0;S.score=0;S.lives=3;S.combo=0;S.bestCombo=0;S.correct=0;
+  S.pw={fifty:1,time:1,skip:1,x2:1};S.x2=false;
+  S.fastCount=0;S.usedSkip=0;S.perfect=true;S.bossBeaten=false;
+  const cand=S.qs.map((q,i)=>({q,i})).filter(x=>!x.q.boss);
+  S.bonusIndex=cand.length?cand[Math.floor(Math.random()*cand.length)].i:-1;
+  $("#hudUnit").textContent=u.name.toUpperCase();
+  $("#hudTeamMode").classList.add("hidden");
+  $("#scoreboard").classList.add("hidden");
+  $("#statLivesBox").classList.remove("hidden");
+  $("#statScoreLbl").textContent="Puntos";
+  document.querySelector(".powerups").classList.remove("hidden");
+  updatePwUI();show("game");renderQ();
+}
+function startTeams(){
+  saveCfg();
+  const u=C[S.grade].units[S.unit];const poolBase=u.qs.map(x=>({...x}));const poolSize=poolBase.length;
+  let rpe=Math.max(1,Math.floor(S.cfgRonda/S.cfgTeams));
+  let totalEfectivo=rpe*S.cfgTeams;
+  if(totalEfectivo>poolSize){rpe=Math.max(1,Math.floor(poolSize/S.cfgTeams));totalEfectivo=rpe*S.cfgTeams;}
+  S.teams=[...document.querySelectorAll("#teamNames input")].map((inp,i)=>({name:(inp.value||("Equipo "+(i+1))).slice(0,20),score:0,correct:0,streak:0,turnos:0}));
+  if(S.teamMode==="stations"){
+    S.stationQueue=[...Array(S.cfgTeams).keys()];S.stationIdx=0;
+    S.retosPorEquipo=rpe;S.rondaEfectiva=totalEfectivo;S.teamQuestions={};
+    for(let i=0;i<S.cfgTeams;i++){
+      const shuf=shuffle(poolBase.map(x=>({...x})));
+      let list=shuf.slice(0,rpe);
+      const jefe=list.find(q=>q.boss);
+      if(jefe){list=list.filter(q=>q!==jefe);list.push(jefe);}
+      S.teamQuestions[i]=list.map(prepareQuestion);
+    }
+    startStationTeam(S.stationQueue[0]);
+  } else {
+    let need;
+    if(S.teamMode==="equitativo"){need=totalEfectivo;S.retosPorEquipo=rpe;S.rondaEfectiva=totalEfectivo;}
+    else {need=Math.min(S.cfgRonda,poolSize);S.retosPorEquipo=0;S.rondaEfectiva=S.cfgRonda;}
+    let list=shuffle(poolBase).slice(0,need);
+    const jefe=list.find(q=>q.boss);
+    if(jefe){list=list.filter(q=>q!==jefe);list.push(jefe);}
+    S.mode="team";S.qs=list.map(prepareQuestion);
+    S.turn=0;S.qi=0;S.correct=0;S.bossBeaten=false;S.perfect=true;S.lastCorrect=false;
+    const cand=S.qs.map((q,i)=>({q,i})).filter(x=>!x.q.boss);
+    S.bonusIndex=cand.length?cand[Math.floor(Math.random()*cand.length)].i:-1;
+    $("#hudUnit").textContent=u.name.toUpperCase();
+    $("#hudTeamMode").classList.remove("hidden");
+    if(S.teamMode==="streak"){$("#hudTeamModeIcon").textContent="🔥";$("#hudTeamModeText").textContent="Avanza si aciertas";}
+    else if(S.teamMode==="equitativo"){$("#hudTeamModeIcon").textContent="⚖️";$("#hudTeamModeText").textContent=`Equitativo · ${S.retosPorEquipo}/equipo`;}
+    else {$("#hudTeamModeIcon").textContent="🔄";$("#hudTeamModeText").textContent="Por turnos";}
+    $("#statLivesBox").classList.add("hidden");
+    $("#statScoreLbl").textContent="Retos";
+    document.querySelector(".powerups").classList.add("hidden");
+    $("#scoreboard").classList.remove("hidden");
+    show("game");renderQ();
+  }
+}
+function startStationTeam(teamIdx){
+  S.mode="team";S.currentStationTeam=teamIdx;
+  S.qs=S.teamQuestions[teamIdx].map(x=>({...x}));
+  S.qi=0;S.bossBeaten=false;S.perfect=true;S.correct=0;
+  const cand=S.qs.map((q,i)=>({q,i})).filter(x=>!x.q.boss);
+  S.bonusIndex=cand.length?cand[Math.floor(Math.random()*cand.length)].i:-1;
+  const u=C[S.grade].units[S.unit];
+  $("#hudUnit").textContent=u.name.toUpperCase();
+  $("#hudTeamMode").classList.remove("hidden");
+  $("#hudTeamModeIcon").textContent="🎬";
+  $("#hudTeamModeText").textContent=`Estación · Equipo ${teamIdx+1}/${S.cfgTeams}`;
+  $("#statLivesBox").classList.add("hidden");
+  $("#statScoreLbl").textContent="Retos";
+  document.querySelector(".powerups").classList.add("hidden");
+  $("#scoreboard").classList.remove("hidden");
+  renderScoreboard();show("game");renderQ();
+}
+
+function currentQ(){return S.qs[S.qi];}
+function isBonus(){return S.qi===S.bonusIndex;}
+function updatePwUI(){
+  document.querySelectorAll(".pw").forEach(b=>{
+    const k=b.dataset.pw;
+    b.querySelector(".cnt").textContent="×"+S.pw[k];
+    b.disabled=S.pw[k]<=0||S.locked||(currentQ()&&(currentQ().t==="order"||currentQ().t==="multi")&&k==="fifty");
+  });
+}
+function renderScoreboard(){
+  const box=$("#scoreboard");
+  if(S.mode!=="team"){box.classList.add("hidden");return;}
+  box.classList.remove("hidden");
+  box.classList.toggle("many",S.teams.length>6);
+  const isStations=S.teamMode==="stations";
+  box.innerHTML=S.teams.map((t,i)=>{
+    const act=isStations?(i===S.currentStationTeam):(i===S.turn);
+    const done=isStations&&i<S.stationIdx;
+    let badge="";
+    if(act)badge='<span class="turn-pill">AHORA</span>';
+    else if(done)badge='<span class="station-pill">✓ JUGADO</span>';
+    else if(S.teamMode==="streak"&&t.streak>=2)badge=`<span class="streak-pill">🔥 x${t.streak}</span>`;
+    else if(S.teamMode==="equitativo")badge='<span class="fair-pill">⚖️</span>';
+    else if(S.teamMode==="stations")badge='<span class="station-pill">🎬</span>';
+    const turnosLine=(S.teamMode==="equitativo"||isStations)?`<div class="sb-turns">Retos: <b>${t.turnos}/${S.retosPorEquipo}</b></div>`:"";
+    return `<div class="sbcard ${act?"act":""} ${done?"done":""}"><div class="sb-name"><span>${act?"▶ En turno":done?"Jugado":"Equipo "+(i+1)}</span>${badge}</div><div class="sb-b">${t.name}</div><div class="sb-score">${t.score}</div>${turnosLine}</div>`;
+  }).join("");
+}
+function renderQ(){
+  stopTimer();S.locked=false;S.orderSel=[];S.multiSel=[];
+  const q=currentQ();const total=S.qs.length;
+  const enTurno=S.mode==="team"?S.teams[S.mode==="team"&&S.teamMode==="stations"?S.currentStationTeam:S.turn]:null;
+  const bonus=isBonus();
+  $("#hudProgress").textContent=(q.boss?"Reto jefe · ":"Reto ")+(S.qi+1)+" de "+total;
+  if(S.mode==="solo"){
+    $("#hudScore").textContent=S.score;
+    $("#hudLives").textContent="● ".repeat(S.lives).trim()+" ○ ".repeat(3-S.lives).trim();
+    const c=$("#hudCombo");
+    if(S.combo>1){c.textContent="Combo x"+S.combo;c.classList.remove("hidden","pop");void c.offsetWidth;c.classList.add("pop");}
+    else c.classList.add("hidden");
+  }else{
+    const jugados=S.teams.reduce((a,t)=>a+t.turnos,0);
+    $("#hudScore").textContent=(jugados+1)+" / "+S.rondaEfectiva;
+    $("#hudCombo").classList.add("hidden");
+  }
+  $("#progFill").style.width=((S.qi)/total*100)+"%";
+  const pb=document.querySelector(".progressbar");
+  pb.querySelectorAll(".bonus-marker").forEach(m=>m.remove());
+  if(S.bonusIndex>=0){const mk=document.createElement("div");mk.className="bonus-marker";mk.style.left=((S.bonusIndex+0.5)/total*100)+"%";pb.appendChild(mk);}
+  renderScoreboard();
+  const badgeEl=$("#qBadge");badgeEl.className="qbadge";
+  if(q.boss){badgeEl.textContent="⚔ Reto jefe";badgeEl.classList.add("boss");}
+  else if(bonus){badgeEl.textContent="⭐ Ronda bonus · x2";badgeEl.classList.add("bonus");}
+  else if(q.t==="order")badgeEl.textContent="🔢 Ordena";
+  else if(q.t==="binary")badgeEl.textContent="✔ Clasifica";
+  else if(q.t==="dilema"){badgeEl.textContent="💬 Debate";badgeEl.classList.add("debate");}
+  else if(q.t==="multi"){badgeEl.textContent="✅ Múltiple";badgeEl.classList.add("multi");}
+  else badgeEl.textContent="🎯 Elige";
+  $("#qText").textContent=q.q;
+  let hintTxt="";
+  if(enTurno){
+    if(S.teamMode==="streak"){const st=enTurno.streak;hintTxt+=`🔥 Turno de ${enTurno.name}${st>=2?" (racha x"+st+")":""} · `;}
+    else if(S.teamMode==="equitativo"){hintTxt+=`⚖️ Turno de ${enTurno.name} (reto ${enTurno.turnos+1}/${S.retosPorEquipo}) · `;}
+    else if(S.teamMode==="stations"){hintTxt+=`🎬 Turno de ${enTurno.name} (reto ${enTurno.turnos+1}/${S.retosPorEquipo}) · `;}
+    else {hintTxt+=`Turno de ${enTurno.name} · `;}
+  }
+  if(q.t==="order")hintTxt+="Haz clic en los pasos en el orden correcto.";
+  else if(q.t==="multi")hintTxt+="Selecciona TODAS las correctas y pulsa Confirmar.";
+  else hintTxt+="Usa las teclas 1-4 o haz clic en la respuesta.";
+  $("#qHint").textContent=hintTxt;
+  $("#feedbackBox").innerHTML="";$("#multiBar").innerHTML="";
+  $("#qcard").classList.toggle("bonus",bonus);
+  updatePwUI();
+  const box=$("#options");box.innerHTML="";box.classList.toggle("binary",q.t==="binary");
+  if(q.t==="order"){
+    shuffle(q.items.map((t,idx)=>({t,idx}))).forEach((it,i)=>{
+      const b=document.createElement("button");b.className="opt";b.dataset.idx=it.idx;
+      b.innerHTML=`<span class="num">${i+1}</span>${it.t}`;
+      b.addEventListener("click",()=>pickOrder(b,it.idx));box.appendChild(b);
+    });
+  }else if(q.t==="multi"){
+    q.o.forEach((op,i)=>{
+      const b=document.createElement("button");b.className="opt";b.dataset.idx=i;
+      b.innerHTML=`<span class="num">${i+1}</span>${op}`;
+      b.addEventListener("click",()=>toggleMulti(b));box.appendChild(b);
+    });
+    const bar=document.createElement("div");bar.className="multi-bar";
+    bar.innerHTML=`<div class="multi-info">Seleccionadas: <b id="multiCount">0</b></div><button class="btn primary" id="btnMultiConfirm" disabled>Confirmar selección</button>`;
+    $("#multiBar").appendChild(bar);
+    $("#btnMultiConfirm").addEventListener("click",confirmMulti);
+  }else{
+    q.o.forEach((op,i)=>{
+      const b=document.createElement("button");b.className="opt";b.dataset.idx=i;
+      b.innerHTML=`<span class="num">${i+1}</span>${op}`;
+      b.addEventListener("click",()=>answer(i));box.appendChild(b);
+    });
+  }
+  if(bonus)sndBonus();
+  startTimer(q.t==="order"?(q.boss?32:28):(q.t==="multi"?(q.boss?28:22):(q.boss?18:25)));
+}
+function pickOrder(btn,idx){
+  if(S.locked||btn.disabled)return;
+  btn.disabled=true;btn.classList.add("picked");S.orderSel.push(idx);
+  btn.querySelector(".num").textContent=S.orderSel.length;sndTick();
+  if(S.orderSel.length===currentQ().items.length)finalize(S.orderSel.every((v,k)=>v===k));
+}
+function answer(i){if(S.locked)return;finalize(i===currentQ().a,i);}
+function toggleMulti(btn){
+  if(S.locked||btn.disabled)return;
+  const idx=parseInt(btn.dataset.idx,10);
+  if(S.multiSel.includes(idx)){S.multiSel=S.multiSel.filter(i=>i!==idx);btn.classList.remove("selected");}
+  else{S.multiSel.push(idx);btn.classList.add("selected");sndTick();}
+  const cnt=$("#multiCount");if(cnt)cnt.textContent=S.multiSel.length;
+  const confirm=$("#btnMultiConfirm");if(confirm)confirm.disabled=S.multiSel.length===0;
+}
+function confirmMulti(){
+  if(S.locked)return;
+  const correct=currentQ().a;
+  const ok=S.multiSel.length===correct.length&&S.multiSel.every(i=>correct.includes(i));
+  finalize(ok,null,S.multiSel);
+}
+function markOptions(picked,selected){
+  const q=currentQ(),btns=[...$("#options").children];
+  if(q.t==="multi"){
+    btns.forEach(b=>{
+      const i=parseInt(b.dataset.idx,10);
+      const isCorrect=q.a.includes(i);const wasSelected=(selected||[]).includes(i);
+      b.classList.remove("selected");
+      if(isCorrect)b.classList.add("correct");else if(wasSelected)b.classList.add("wrong");
+      if(isCorrect&&!wasSelected)b.classList.add("missed");
+    });
+  }else if(q.t==="order"){
+    btns.forEach(b=>{const idx=parseInt(b.dataset.idx,10),pos=S.orderSel.indexOf(idx);if(pos>-1)b.classList.add(S.orderSel[pos]===pos?"correct":"wrong");});
+  }else{
+    btns.forEach(b=>{const i=parseInt(b.dataset.idx,10);if(i===q.a)b.classList.add("correct");else if(i===picked)b.classList.add("wrong");});
+  }
+}
+function finalize(ok,picked,selected){
+  if(S.locked)return;
+  S.locked=true;stopTimer();markOptions(picked,selected);S.lastCorrect=ok;
+  const q=currentQ();let gained=0,extra="";
+  const fast=S.timeLeft>S.maxTime*.6;const bonus=isBonus();
+  if(S.mode==="solo"){
+    if(ok){
+      S.correct++;if(fast)S.fastCount++;
+      const bonusT=Math.round((S.timeLeft/S.maxTime)*50);gained=100+bonusT;
+      S.combo++;S.bestCombo=Math.max(S.bestCombo,S.combo);gained+=Math.min((S.combo-1)*25,100);
+      if(S.x2){gained*=2;extra+=`<div class="fb-note">⚡ x2 activado: puntos duplicados.</div>`;}
+      if(bonus){gained*=2;extra+=`<div class="fb-note">⭐ Ronda bonus: +${gained} puntos.</div>`;}
+      S.score+=gained;
+      if(S.combo%3===0&&S.lives<3){S.lives++;flash("¡Energía recuperada!");}
+      if(S.combo%3===0){const keys=Object.keys(S.pw).filter(k=>S.pw[k]<3);if(keys.length){const k=keys[Math.floor(Math.random()*keys.length)];S.pw[k]++;extra+=`<div class="fb-note">🎁 Power-up ganado.</div>`;}}
+      sndOK();confetti(bonus?70:40);
+      if(q.boss){S.bossBeaten=true;flash("¡Jefe derrotado!");}
+    }else{
+      S.perfect=false;S.combo=0;S.lives=Math.max(0,S.lives-1);sndBad();
+      document.querySelector(".qcard").animate([{transform:"translateX(0)"},{transform:"translateX(-8px)"},{transform:"translateX(8px)"},{transform:"translateX(0)"}],{duration:300});
+    }
+    $("#hudScore").textContent=S.score;
+    $("#hudLives").textContent="● ".repeat(S.lives).trim()+" ○ ".repeat(3-S.lives).trim();
+  }else{
+    const teamIdx=S.teamMode==="stations"?S.currentStationTeam:S.turn;
+    const team=S.teams[teamIdx];team.turnos++;
+    if(ok){
+      S.correct++;const bonusT=Math.round((S.timeLeft/S.maxTime)*50);gained=100+bonusT;
+      if(bonus){gained*=2;extra+=`<div class="fb-note">⭐ Ronda bonus: puntos x2.</div>`;}
+      team.score+=gained;team.correct++;team.streak++;
+      extra+=`<div class="fb-note">+${gained} puntos para <b>${team.name}</b> (incluye ${bonusT} de bono de tiempo).</div>`;
+      if(S.teamMode==="streak"){
+        if(team.streak>=2){extra+=`<div class="fb-note fire">🔥 ¡Racha x${team.streak}! <b>${team.name}</b> mantiene el turno.</div>`;sndStreak();confetti(60);}
+        else {extra+=`<div class="fb-note fire">🔥 <b>${team.name}</b> mantiene el turno.</div>`;}
+      }
+      if(S.teamMode==="equitativo")extra+=`<div class="fb-note fair">⚖️ <b>${team.name}</b>: reto ${team.turnos}/${S.retosPorEquipo}.</div>`;
+      if(S.teamMode==="stations")extra+=`<div class="fb-note station">🎬 <b>${team.name}</b>: reto ${team.turnos}/${S.retosPorEquipo} de su turno.</div>`;
+      if(q.boss){S.bossBeaten=true;flash("¡Jefe derrotado!");}
+      sndOK();if(team.streak<2)confetti(bonus?70:40);
+    }else{
+      S.perfect=false;sndBad();team.streak=0;
+      if(S.teamMode==="streak"){const nextTeam=S.teams[(S.turn+1)%S.teams.length];extra+=`<div class="fb-note">💥 <b>${team.name}</b> falló. El turno pasa a <b>${nextTeam.name}</b>.</div>`;}
+      else if(S.teamMode==="equitativo")extra+=`<div class="fb-note fair">⚖️ <b>${team.name}</b>: reto ${team.turnos}/${S.retosPorEquipo}.</div>`;
+      else if(S.teamMode==="stations")extra+=`<div class="fb-note station">🎬 <b>${team.name}</b>: reto ${team.turnos}/${S.retosPorEquipo} de su turno.</div>`;
+      else extra+=`<div class="fb-note">Turno perdido. Ahora responde <b>${S.teams[(S.turn+1)%S.teams.length].name}</b>.</div>`;
+      document.querySelector(".qcard").animate([{transform:"translateX(0)"},{transform:"translateX(-8px)"},{transform:"translateX(8px)"},{transform:"translateX(0)"}],{duration:300});
+    }
+    renderScoreboard();
+  }
+  $("#progFill").style.width=(((S.qi+1)/S.qs.length)*100)+"%";
+  let orderNote="";
+  if(!ok&&q.t==="order")orderNote=`<div class="fb-note">Orden correcto: ${q.items.join(" → ")}</div>`;
+  if(!ok&&q.t==="multi"){const nombres=q.a.map(i=>q.o[i]).join(" · ");orderNote=`<div class="fb-note">Correctas: ${nombres}</div>`;}
+  $("#feedbackBox").innerHTML=`<div class="feedback ${ok?"ok":"bad"}"><div class="fb-main"><h4>${ok?"✅ ¡Correcto!":"📚 Repasemos este reto"}</h4><p>${q.e}</p>${q.n?`<div class="fb-note">${q.n}</div>`:""}${orderNote}${extra}</div><div class="fb-score">${ok?"+"+gained:"+0"}</div></div><div style="margin-top:20px"><button class="btn primary" id="btnNext">${termina()?"Ver resultados":"Siguiente reto  ›"}</button></div>`;
+  $("#btnNext").addEventListener("click",next);$("#btnNext").focus();
+  updatePwUI();
+}
+function termina(){
+  if(S.mode==="solo")return S.lives===0||S.qi+1>=S.qs.length;
+  return S.qi+1>=S.qs.length;
+}
+function next(){
+  if(S.mode==="solo"&&S.lives===0){endGame(false);return;}
+  S.qi++;
+  if(S.qi>=S.qs.length){
+    if(S.mode==="team"&&S.teamMode==="stations"){
+      if(S.stationIdx+1<S.stationQueue.length){showStationScreen();return;}
+      endGame(true);return;
+    }
+    endGame(true);return;
+  }
+  if(S.mode==="team"){
+    if(S.teamMode==="streak" && S.lastCorrect){}
+    else if(S.teamMode==="stations"){}
+    else S.turn=(S.turn+1)%S.teams.length;
+  }
+  renderQ();
+}
+function startTimer(sec){
+  S.maxTime=sec;S.timeLeft=sec;updateTimer();
+  S.timer=setInterval(()=>{
+    S.timeLeft=Math.max(0,S.timeLeft-.1);updateTimer();
+    if(S.timeLeft<=5&&S.timeLeft>0&&Math.abs(S.timeLeft-Math.round(S.timeLeft))<.06)sndTick();
+    if(S.timeLeft<=0){stopTimer();finalize(false,-1,null);}
+  },100);
+}
+function stopTimer(){if(S.timer){clearInterval(S.timer);S.timer=null;}}
+function updateTimer(){
+  const pct=(S.timeLeft/S.maxTime)*100,f=$("#timerFill");
+  f.style.width=pct+"%";
+  f.style.background=pct<30?"var(--no)":"var(--gg)";
+  $("#hudTime").textContent=Math.ceil(S.timeLeft);
+}
+function flash(msg){const d=document.createElement("div");d.className="flash";d.innerHTML=`<span>${msg}</span>`;document.body.appendChild(d);setTimeout(()=>d.remove(),1250);}
+function confetti(n){
+  const c=document.createElement("div");c.className="confetti";
+  const colors=["#314B96","#4A64B0","#F5A623","#10b981","#0ea5e9"];
+  for(let i=0;i<n;i++){const s=document.createElement("i");
+    s.style.left=Math.random()*100+"%";s.style.background=colors[Math.floor(Math.random()*colors.length)];
+    s.style.animationDuration=(1.6+Math.random()*1.2)+"s";s.style.animationDelay=(Math.random()*.4)+"s";
+    s.style.width=(6+Math.random()*8)+"px";s.style.height=(10+Math.random()*10)+"px";c.appendChild(s);}
+  document.body.appendChild(c);setTimeout(()=>c.remove(),3200);
+}
+document.querySelectorAll(".pw").forEach(b=>b.addEventListener("click",()=>{
+  if(S.locked||S.mode!=="solo")return;
+  const k=b.dataset.pw;if(S.pw[k]<=0)return;
+  const q=currentQ();
+  if(k==="fifty"){
+    if(q.t==="order"||q.t==="multi"||q.o.length<4)return;
+    const btns=[...$("#options").children];
+    const wrong=shuffle(btns.map((b,i)=>i).filter(i=>i!==q.a));
+    wrong.slice(0,2).forEach(i=>btns[i].classList.add("gone"));
+    S.pw.fifty--;flash("50 / 50");
+  }
+  if(k==="time"){S.timeLeft=Math.min(S.maxTime,S.timeLeft+10);S.pw.time--;flash("+10 segundos");updateTimer();}
+  if(k==="skip"){S.pw.skip--;S.usedSkip++;flash("Saltar reto");stopTimer();next();return;}
+  if(k==="x2"){S.pw.x2--;S.x2=true;flash("x2 listo");}
+  updatePwUI();
+}));
+
+function showStationScreen(){
+  stopTimer();
+  const currentTeamIdx=S.stationQueue[S.stationIdx];
+  const team=S.teams[currentTeamIdx];
+  const nextTeamIdx=S.stationQueue[S.stationIdx+1];
+  const nextTeam=S.teams[nextTeamIdx];
+  $("#stIcon").textContent="✅";
+  $("#stLabel").textContent=`Turno ${S.stationIdx+1} de ${S.stationQueue.length} completado`;
+  $("#stTeam").textContent=team.name;
+  $("#stPts").textContent=team.score;
+  $("#stSub").innerHTML=`¡Buen trabajo, <b>${team.name}</b>! Respondieron <b>${team.turnos}</b> retos con <b>${team.correct}</b> aciertos.`;
+  $("#stNext").innerHTML=`➡️ Ahora le toca a <b>${nextTeam.name}</b>. Pásenle el dispositivo y pulsen el botón cuando estén listos.`;
+  sndWin();show("station");
+}
+$("#btnNextStation").addEventListener("click",()=>{
+  S.stationIdx++;
+  if(S.stationIdx>=S.stationQueue.length){endGame(true);return;}
+  startStationTeam(S.stationQueue[S.stationIdx]);
+});
+$("#btnQuitStation").addEventListener("click",()=>{
+  if(confirm("¿Seguro que quieres salir del torneo?")){renderUnits();show("units");}
+});
+
+function endGame(finished){
+  stopTimer();
+  const total=S.qs.length;const podium=$("#podium"),achv=$("#achv"),endStats=$("#endStats");
+  if(S.mode==="team"){
+    const rank=[...S.teams].sort((a,b)=>b.score-a.score);
+    const top=rank[0].score;
+    const empatados=rank.filter(t=>t.score===top);
+    const esEmpate=empatados.length>1;
+    $("#endStars").innerHTML="";
+    let modeLabel="";
+    if(S.teamMode==="streak")modeLabel=" (modo racha)";
+    else if(S.teamMode==="equitativo")modeLabel=" (modo equitativo)";
+    else if(S.teamMode==="stations")modeLabel=" (por estaciones)";
+    else modeLabel=" (por turnos)";
+    if(esEmpate){
+      $("#endTitle").textContent="⚖️ ¡Empate!";
+      $("#endMsg").innerHTML=`Empate entre ${empatados.map(t=>"<b>"+t.name+"</b>").join(" y ")} con ${top} puntos${modeLabel}. ¡Todos merecen reconocimiento!`;
+    } else {
+      $("#endTitle").textContent="🏁 Torneo terminado";
+      if(S.teamMode==="equitativo"||S.teamMode==="stations"){
+        $("#endMsg").innerHTML=`Ganador${modeLabel}: <b>${rank[0].name}</b> con ${rank[0].score} puntos. Cada equipo respondió <b>${S.retosPorEquipo} retos</b>, comparación justa.`;
+      } else {
+        $("#endMsg").innerHTML=`Ganador${modeLabel}: <b>${rank[0].name}</b> con ${rank[0].score} puntos. ¡Buen trabajo de todas las escuadras!`;
+      }
+    }
+    podium.classList.remove("hidden");
+    podium.classList.toggle("many",rank.length>6);
+    podium.innerHTML=rank.map((t,i)=>{
+      const medals=["🥇","🥈","🥉","4️⃣"],labels=["Campeón","Segundo lugar","Tercer lugar","Cuarto lugar"];
+      const isTie=esEmpate&&t.score===top;
+      const cls=isTie?"pod tie":(i===0?"pod win":"pod");
+      const label=i<4?labels[i]:"Puesto "+(i+1);
+      const medal=i<4?medals[i]:"🏅";
+      return `<div class="${cls}"><span class="crown">${isTie&&esEmpate?"🤝":medal}</span><div class="rank">${isTie&&esEmpate?"EMPATE":label}</div><div class="name">${t.name}</div><div class="pts">${t.score}</div><div class="sub">${t.correct} aciertos${(S.teamMode==="equitativo"||S.teamMode==="stations")?" · "+t.turnos+" retos":""}</div></div>`;
+    }).join("");
+    achv.classList.add("hidden");endStats.classList.add("hidden");
+    if(!esEmpate&&rank.length>=2&&rank[0].score>0)sndWin();
+    if(esEmpate)confetti(100);
+  }else{
+    const ratio=S.correct/total;
+    const stars=ratio>=.9?3:ratio>=.7?2:ratio>=.45?1:0;
+    const key="inetfradpas-"+S.grade+"-"+S.unit;
+    const prev=parseInt(localStorage.getItem(key)||"0",10);
+    const isRecord=S.score>prev;
+    if(isRecord)localStorage.setItem(key,S.score);
+    $("#endStars").innerHTML=[0,1,2].map(i=>`<span class="${i<stars?"":"off"}">★</span>`).join("");
+    $("#endTitle").textContent=finished?"¡Unidad completada!":"Intento terminado";
+    $("#endMsg").innerHTML=finished?(isRecord?`¡Nuevo récord en <b>${C[S.grade].units[S.unit].name}</b>!`:`Repasa los retos fallados y vuelve a intentarlo para subir tus estrellas.`):`Te quedaste sin energías en <b>${C[S.grade].units[S.unit].name}</b>. Cada intento enseña.`;
+    podium.classList.add("hidden");achv.classList.remove("hidden");endStats.classList.remove("hidden");
+    const achvList=[
+      {t:"Racha de fuego",ok:S.bestCombo>=5,d:"5+ aciertos seguidos"},
+      {t:"Puntería perfecta",ok:S.perfect,d:"Sin fallar ni una"},
+      {t:"Velocista",ok:S.fastCount>=3,d:"3 respuestas rápidas"},
+      {t:"Cazajefes",ok:S.bossBeaten,d:"Derrotaste al jefe final"},
+      {t:"Francotirador",ok:S.correct>=Math.ceil(total*.8),d:"80% de aciertos"},
+      {t:"Sin trampas",ok:S.usedSkip===0,d:"No usaste Saltar"}
+    ];
+    achv.innerHTML=achvList.map(a=>`<div class="ach ${a.ok?"":"locked"}"><small>${a.ok?"🏆 Logrado":"🔒 Por lograr"}</small><b>${a.t}</b><div class="desc">${a.d}</div></div>`).join("");
+    $("#endScore").textContent=S.score;$("#endCorrect").textContent=S.correct+"/"+total;
+    $("#endCombo").textContent=S.bestCombo;$("#endRecord").textContent=Math.max(S.score,prev);
+    if(finished&&stars>=2){sndWin();confetti(80);}
+  }
+  show("end");
+}
+
+$("#btnHome").addEventListener("click",()=>show("home"));
+$("#btnGo").addEventListener("click",()=>{document.querySelector(".grades").scrollIntoView({behavior:"smooth"});});
+$("#btnRules").addEventListener("click",()=>show("rules"));
+$("#btnRules2").addEventListener("click",()=>show("rules"));
+$("#btnBackHome").addEventListener("click",()=>show("home"));
+$("#btnBackGrades").addEventListener("click",()=>show("home"));
+$("#btnBackUnits").addEventListener("click",()=>{renderUnits();show("units");});
+$("#btnCancelSetup").addEventListener("click",()=>{renderUnits();show("units");});
+$("#btnStartTeams").addEventListener("click",startTeams);
+$("#btnOtherUnit").addEventListener("click",()=>{renderUnits();show("units");});
+$("#btnEndHome").addEventListener("click",()=>show("home"));
+$("#btnRetry").addEventListener("click",()=>{if(S.mode==="team")openSetup(S.grade,S.unit);else startUnit(S.grade,S.unit);});
+$("#btnQuit").addEventListener("click",()=>{
+  if(S.mode==="team"&&S.teamMode==="stations"){
+    if(confirm("¿Salir del torneo por estaciones?")){stopTimer();renderUnits();show("units");}
+  } else {stopTimer();renderUnits();show("units");}
+});
+$("#btnSound").addEventListener("click",()=>{S.sound=!S.sound;$("#btnSound").textContent="🔊 Sonido: "+(S.sound?"ON":"OFF");});
+document.addEventListener("keydown",e=>{
+  if(!$("#guideOverlay").classList.contains("hidden")){if(e.key==="Escape")closeGuide();return;}
+  if($("#game").classList.contains("hidden"))return;
+  if(e.key==="Enter"){const n=$("#btnNext");if(n)n.click();return;}
+  const num=parseInt(e.key,10);
+  if(num>=1&&num<=5&&!S.locked){const b=$("#options").children[num-1];if(b&&!b.disabled)b.click();}
+  if(e.key==="Escape"){stopTimer();renderUnits();show("units");}
+});
+show("home");
+</script>
+</body>
+</html>
